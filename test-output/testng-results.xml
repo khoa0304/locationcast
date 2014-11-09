@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="21783" started-at="2014-11-09T04:19:29Z" finished-at="2014-11-09T04:19:50Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="21783" started-at="2014-11-09T04:19:29Z" finished-at="2014-11-09T04:19:50Z">
+      <class name="com.locationcast.repository.LocationRepositoryTest">
+        <test-method status="PASS" signature="init()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@b1d87]" name="init" is-config="true" duration-ms="1275" started-at="2014-11-08T20:19:27Z" finished-at="2014-11-08T20:19:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="testInit()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@b1d87]" name="testInit" duration-ms="21773" started-at="2014-11-08T20:19:29Z" finished-at="2014-11-08T20:19:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testInit -->
+      </class> <!-- com.locationcast.repository.LocationRepositoryTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
