@@ -15,16 +15,23 @@ import com.mongodb.WriteConcern;
 @Configuration
 @EnableMongoRepositories
 @ComponentScan(basePackages={"com.locationcast.repository"})
-@PropertySource("classpath:application.properties")
+//@PropertySource({"classpath:application.properties","classpath:applicationContext.xml"})
+@PropertySource({"classpath:application.properties"})
 public class MongoConfig extends AbstractMongoConfiguration {
 
 	@Override
 	protected String getDatabaseName() {
 		return "location";
 	}
+	
 
 	@Override
-	@Bean
+	protected String getMappingBasePackage() {
+		return "com.locationcast.domain";
+	}
+
+	@Override
+	//@Bean
 	public MongoClient mongo() throws Exception {
 		MongoClient client = new MongoClient((new ServerAddress("localhost",27017)));
 		client.setWriteConcern(WriteConcern.SAFE);
@@ -32,16 +39,15 @@ public class MongoConfig extends AbstractMongoConfiguration {
 		return client;
 	}
 
-	@Override
-	protected String getMappingBasePackage() {
-		return "com.locationcast.domain";
-	}
 
-	// ---------------------------------------------------- MongoTemplate
-
-	@Bean
-	public MongoTemplate mongoTemplate() throws Exception {
+	@Bean(name="locationTemplate")
+	public MongoTemplate locationTemplate() throws Exception {
 		return new MongoTemplate(mongo(), getDatabaseName());
+	}
+	
+	@Bean(name="testTemplateDB")
+	public MongoTemplate testTemplate() throws Exception {
+		return new MongoTemplate(mongo(), "UnitTest");
 	}
 
 }

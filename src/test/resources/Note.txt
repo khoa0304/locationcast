@@ -1,0 +1,27 @@
+1. To calculate distance
+
+Improved approximate distance in miles:
+
+    sqrt(x * x + y * y)
+
+where x = 69.1 * (lat2 - lat1)
+and y = 69.1 * (lon2 - lon1) * cos(lat1/57.3) 
+
+2.
+Decimal Places   Aprox. Distance    Say What?
+1                10 kilometers      6.2 miles
+2                1 kilometer        0.62 miles
+3                100 meters         About 328 feet
+4                10 meters          About 33 feet
+5                1 meter            About 3 feet
+6                10 centimeters     About 4 inches
+7                1.0 centimeter     About ½ an inch
+8                1.0 millimeter     The width of paperclip wire.
+9                0.1 millimeter     The width of a strand of hair.
+
+
+3.
+
+-122.200000 (moutain on the left West) -121.700000 (moutain on the right East)
+
+36.000000 (close to Bakersfield South), 38.50000 (santa rosa North)
