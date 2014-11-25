@@ -5,7 +5,7 @@
     <classes>
       <class name="com.locationcast.repository.LocationRepositoryTest">
         <methods>
-          <include name="testInit"/>
+          <include name="testQueryForMaxDistanceInMile"/>
           <include name="init"/>
         </methods>
       </class> <!-- com.locationcast.repository.LocationRepositoryTest -->

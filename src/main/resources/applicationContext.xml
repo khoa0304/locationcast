@@ -16,7 +16,8 @@
 	<context:annotation-config />
 
 	<context:component-scan
-		base-package="com.locationcast.rest,com.locationcast.repository" />
+		base-package="com.locationcast.rest,com.locationcast.repository,
+		              com.locationcast.facade.impl,com.locationcast.factory.impl" />
 
 
 
@@ -42,9 +43,9 @@
 
 	<mongo:mongo id="mongo" /> <!-- defaults: host="127.0.0.1" port="27017" -->
 
-	<bean id="locationTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+	<bean id="locationcastdb" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="location" />
+		<constructor-arg name="databaseName" value="locationcast" />
 	</bean>
 
 	<!-- 

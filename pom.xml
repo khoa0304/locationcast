@@ -188,6 +188,13 @@
 			<version>2.5</version>
 		</dependency>
 
+		<!-- Twilio SMS Library -->
+
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio-java-sdk</artifactId>
+			<version>3.5.0</version>
+		</dependency>
 
 		<!-- test dependencies -->
 		<dependency>

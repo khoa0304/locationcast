@@ -1,22 +1,17 @@
-package com.locationcast.repository;
+package com.locationcast.repository.impl;
 
 
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.mongodb.core.IndexOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
 import com.locationcast.domain.Location;
+import com.locationcast.repository.LocationRepository;
 
 
 /**
@@ -27,13 +22,12 @@ import com.locationcast.domain.Location;
 @Repository
 public class LocationRepositoryImpl implements LocationRepository {
 
-    static final Logger logger = LoggerFactory.getLogger(LocationRepositoryImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(LocationRepositoryImpl.class);
 
-    private static final String COLLECTION = "location";
   
     @Autowired
-    @Qualifier("locationTemplate")
-    MongoTemplate mongoTemplate;
+    @Qualifier("locationcastdb")
+    MongoOperations mongoOperation;
     
 
   
@@ -44,7 +38,7 @@ public class LocationRepositoryImpl implements LocationRepository {
 	}
 	
 	public List<Location> getLocation(){
-		List<Location> locationList = mongoTemplate.findAll(Location.class);
+		List<Location> locationList = mongoOperation.findAll(Location.class);
 		return locationList;
 	}
 

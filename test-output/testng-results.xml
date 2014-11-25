@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="21783" started-at="2014-11-09T04:19:29Z" finished-at="2014-11-09T04:19:50Z">
+  <suite name="Default suite" duration-ms="14644" started-at="2014-11-21T23:23:15Z" finished-at="2014-11-21T23:23:29Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="21783" started-at="2014-11-09T04:19:29Z" finished-at="2014-11-09T04:19:50Z">
+    <test name="Default test" duration-ms="14644" started-at="2014-11-21T23:23:15Z" finished-at="2014-11-21T23:23:29Z">
       <class name="com.locationcast.repository.LocationRepositoryTest">
-        <test-method status="PASS" signature="init()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@b1d87]" name="init" is-config="true" duration-ms="1275" started-at="2014-11-08T20:19:27Z" finished-at="2014-11-08T20:19:29Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@4033d6f1]" name="init" is-config="true" duration-ms="14586" started-at="2014-11-21T15:23:15Z" finished-at="2014-11-21T15:23:29Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="testInit()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@b1d87]" name="testInit" duration-ms="21773" started-at="2014-11-08T20:19:29Z" finished-at="2014-11-08T20:19:50Z">
+        <test-method status="PASS" signature="testLocationAndTopicQueries()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@4033d6f1]" name="testLocationAndTopicQueries" duration-ms="9" started-at="2014-11-21T15:23:29Z" finished-at="2014-11-21T15:23:29Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testInit -->
+        </test-method> <!-- testLocationAndTopicQueries -->
+        <test-method status="PASS" signature="testQueryForMaxDistanceInMile()[pri:0, instance:com.locationcast.repository.LocationRepositoryTest@4033d6f1]" name="testQueryForMaxDistanceInMile" duration-ms="38" started-at="2014-11-21T15:23:29Z" finished-at="2014-11-21T15:23:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testQueryForMaxDistanceInMile -->
       </class> <!-- com.locationcast.repository.LocationRepositoryTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

@@ -3,13 +3,14 @@ package com.locationcast.domain;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Location")
+/**
+ * 
+ * @author Khoa
+ * @since 0.1
+ */
+
 public class Location implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,21 +32,19 @@ public class Location implements Serializable {
 	   
 	}
 
-	@Id
-	private long id ;
-
-//	/@GeoSpatialIndexed(type=GeoSpatialIndexType.GEO_2D)
+	private long id;
 	private double[] point;
 
+	
 	@Transient
 	private double latitute;
 	@Transient
 	private double logitute;
 
+	
 	public Location(){};
 	
 	public Location(double[]  location){
-		this.id = System.currentTimeMillis();
 		this.point = location;
 	}
 	
