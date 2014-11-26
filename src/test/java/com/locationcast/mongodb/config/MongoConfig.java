@@ -5,8 +5,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -14,14 +16,15 @@ import com.mongodb.WriteConcern;
 
 @Configuration
 @EnableMongoRepositories
-@ComponentScan(basePackages={"com.locationcast.repository"})
+//@ComponentScan(basePackages={"com.locationcast.repository"})
+@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
 //@PropertySource({"classpath:application.properties","classpath:applicationContext.xml"})
 @PropertySource({"classpath:application.properties"})
 public class MongoConfig extends AbstractMongoConfiguration {
 
 	@Override
 	protected String getDatabaseName() {
-		return "location";
+		return "locationcast";
 	}
 	
 
@@ -40,13 +43,13 @@ public class MongoConfig extends AbstractMongoConfiguration {
 	}
 
 
-	@Bean(name="locationTemplate")
-	public MongoTemplate locationTemplate() throws Exception {
+	@Bean(name="locationcastdb")
+	public MongoOperations locationTemplate() throws Exception {
 		return new MongoTemplate(mongo(), getDatabaseName());
 	}
 	
 	@Bean(name="testTemplateDB")
-	public MongoTemplate testTemplate() throws Exception {
+	public MongoOperations testTemplate() throws Exception {
 		return new MongoTemplate(mongo(), "UnitTest");
 	}
 

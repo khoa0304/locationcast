@@ -16,8 +16,11 @@
 	<context:annotation-config />
 
 	<context:component-scan
-		base-package="com.locationcast.rest,com.locationcast.repository,
-		              com.locationcast.facade.impl,com.locationcast.factory.impl" />
+		base-package="com.locationcast.rest,
+					 com.locationcast.repository,
+					 com.locationcast.repository.impl,
+		             com.locationcast.facade,com.locationcast.facade.impl,
+		             com.locationcast.factory,com.locationcast.factory.impl" />
 
 
 
@@ -48,13 +51,13 @@
 		<constructor-arg name="databaseName" value="locationcast" />
 	</bean>
 
-	<!-- 
+	<!--  -->
 	<bean id="testTemplateDB" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg name="databaseName" value="unitTest" />
 	</bean>
 	
-	 -->
+	
 
 
 

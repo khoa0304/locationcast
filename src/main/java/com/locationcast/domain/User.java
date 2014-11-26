@@ -38,6 +38,8 @@ public class User extends AbstractDocument implements Serializable {
 	
 	private String password = "";
 	
+	public User(){};
+	
 	public User(String userName,String emailAddress, String password){
 		this.userName = userName;
 		this.email = emailAddress;
