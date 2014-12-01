@@ -7,16 +7,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @author Khoa
  *
  */
+@Document
 public class Content implements Serializable{
 
 	
 	private static final long serialVersionUID = 1L;
 
-	private String text = "";
+	private String contentString = "";
 	
 	private String hrefLink = "";
 	
@@ -26,14 +29,14 @@ public class Content implements Serializable{
 	 * @return the text
 	 */
 	public String getText() {
-		return text;
+		return contentString;
 	}
 
 	/**
 	 * @param text the text to set
 	 */
 	public void setText(String text) {
-		this.text = text;
+		this.contentString = text;
 	}
 
 	/**

@@ -17,20 +17,25 @@ import com.locationcast.util.LocationCastConstant;
  *
  */
 @Document(collection="User")
-public class User extends AbstractDocument implements Serializable {
+public class User extends AbstractDomainModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Indexed(sparse=true,unique=true,expireAfterSeconds=LocationCastConstant.SESSION_EXPIRATION_IN_SECOND)
+	@Indexed(sparse=true,unique=true,
+			expireAfterSeconds=LocationCastConstant.SESSION_EXPIRATION_IN_SECOND)
 	private String userName;
 	
-	private String firstName;
+	@Indexed(sparse=true,unique=true,
+			expireAfterSeconds=LocationCastConstant.SESSION_EXPIRATION_IN_SECOND)
+	private String nickName;
 	
-	private String lastName;
+	private String firstName = null;
+	
+	private String lastName = null;
 	
 	private String email;
 	
-	private String mobileNumber;
+	private String mobileNumber = null;
 	
 	private List<Long> conversationFollowed = new ArrayList<Long>();
 	
@@ -38,6 +43,24 @@ public class User extends AbstractDocument implements Serializable {
 	
 	private String password = "";
 	
+	public static enum Fields{
+		
+		USERNAME("userName"),
+		NICKNAME("nickName");
+		
+		private String fieldName;
+		
+		Fields(String fieldName){
+			this.fieldName = fieldName;
+		}
+		
+		/**
+		 * @return the fieldName
+		 */
+		public String getFieldName() {
+			return fieldName;
+		}
+	}
 	public User(){};
 	
 	public User(String userName,String emailAddress, String password){
@@ -45,6 +68,7 @@ public class User extends AbstractDocument implements Serializable {
 		this.email = emailAddress;
 		this.password = password;
 	}
+	
 	public User(String userName, String firstName, String lastName, String emailAddress, String password){
 		
 		this.userName = userName;
@@ -63,6 +87,11 @@ public class User extends AbstractDocument implements Serializable {
 		this.mobileNumber = mobileNumber;
 		this.password = password;
 	}
+	
+	public User setUserName(String userName){
+		this.userName = userName;
+		return this;
+	}
 	/**
 	 * @return the userName
 	 */
@@ -70,12 +99,6 @@ public class User extends AbstractDocument implements Serializable {
 		return userName;
 	}
 
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 	/**
 	 * @return the firstName
@@ -87,8 +110,9 @@ public class User extends AbstractDocument implements Serializable {
 	/**
 	 * @param firstName the firstName to set
 	 */
-	public void setFirstName(String firstName) {
+	public User setFirstName(String firstName) {
 		this.firstName = firstName;
+		return this;
 	}
 
 	/**
@@ -101,8 +125,9 @@ public class User extends AbstractDocument implements Serializable {
 	/**
 	 * @param lastName the lastName to set
 	 */
-	public void setLastName(String lastName) {
+	public User setLastName(String lastName) {
 		this.lastName = lastName;
+		return this;
 	}
 
 	/**
@@ -115,8 +140,9 @@ public class User extends AbstractDocument implements Serializable {
 	/**
 	 * @param email the email to set
 	 */
-	public void setEmail(String email) {
+	public User setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	/**
@@ -129,8 +155,9 @@ public class User extends AbstractDocument implements Serializable {
 	/**
 	 * @param mobileNumber the mobileNumber to set
 	 */
-	public void setMobileNumber(String mobileNumber) {
+	public User setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+		return this;
 	}
 
 	/**
@@ -179,9 +206,39 @@ public class User extends AbstractDocument implements Serializable {
 	/**
 	 * @param password the password to set
 	 */
-	public void setPassword(String password) {
+	public User setPassword(String password) {
 		this.password = password;
+		return this;
 	}
 	
+	public User buildUserObject(){
+		
+		User user = new User(this.userName,this.email,this.password);
+		if(this.firstName != null){
+			user.setFirstName(this.firstName);
+		}
+		if(this.lastName != null){
+			user.setLastName(this.lastName);
+		}
+		if(this.mobileNumber != null){
+			user.setMobileNumber(this.mobileNumber);
+		}
+		return user;
+	}
+
+	/**
+	 * @return the nickName
+	 */
+	public String getNickName() {
+		return nickName;
+	}
+
+	/**
+	 * @param nickName the nickName to set
+	 */
+	public User setNickName(String nickName) {
+		this.nickName = nickName;
+		return this;
+	}
 	
 }

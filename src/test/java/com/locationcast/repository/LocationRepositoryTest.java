@@ -1,13 +1,13 @@
 package com.locationcast.repository;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.DefaultIndexOperations;
@@ -18,28 +18,23 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.locationcast.domain.Location;
-import com.locationcast.domain.Topic;
 import com.locationcast.mongodb.config.MongoConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { MongoConfig.class })
-public class LocationRepositoryTest {
+public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 
 	// @Rule
 	// public MongoDbRule mongoDbRule =
 	// newMongoDbRule().defaultSpringMongoDb("demo-test");
 
 	// nosql-unit requirement
-	@Autowired
-	private ApplicationContext applicationContext;
-
-	private MongoOperations mongoOperation = null;
+	
 
 	public static final Double KILOMETER_PER_DEGREE = 111.0d;
 
@@ -47,12 +42,6 @@ public class LocationRepositoryTest {
 
 	@BeforeClass
 	public void init() {
-
-		applicationContext = new AnnotationConfigApplicationContext(
-				MongoConfig.class);
-
-		mongoOperation = (MongoOperations) applicationContext
-				.getBean("testTemplateDB");
 
 		DefaultIndexOperations indexOp = new DefaultIndexOperations(
 				mongoOperation, Location.class.getSimpleName().toLowerCase());

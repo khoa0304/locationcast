@@ -12,4 +12,6 @@ import com.locationcast.domain.User;
 public interface UserRepository {
 
 	void insertUser(User user);
+	
+	User findUserByUserName(String userName);
 }

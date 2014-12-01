@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @since 0.1 
  */
 @Document
-public class Topic extends AbstractDocument{
+public class Topic extends AbstractDomainModel{
 
 	private static final long serialVersionUID = 1L;
 

@@ -10,9 +10,8 @@ import com.locationcast.exception.InvalidDomainModelException;
  * @author Khoa
  *
  */
-public interface UserFacade {
+public interface UserValidation {
 
-	 boolean createUser(User user) throws InvalidDomainModelException;
 	
-	 User findUser(User user);
+	void validateBasicUserRegistrationInfo(User user) throws InvalidDomainModelException;
 }

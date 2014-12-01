@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.locationcast.repository;
+package com.locationcast.lab;
 
 import java.util.ArrayList;
 import java.util.List;

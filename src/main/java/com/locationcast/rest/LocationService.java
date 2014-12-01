@@ -4,8 +4,6 @@ package com.locationcast.rest;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +23,13 @@ import com.locationcast.repository.LocationRepository;
 public class LocationService {
 
 	 
-	static final Logger logger = LoggerFactory.getLogger(LocationService.class);
+	private static final Logger logger = LoggerFactory.getLogger(LocationService.class);
     
 	public static final Double KILOMETER = 111.0d;
 
     @Autowired
     LocationRepository locationRepos;
     
-    @PostConstruct
-    public void postConstruct(){
-    	logger.info("\n\n\n\n\n Initialize  "+LocationService.class.getName() +"\n\n\n\n\n\n");
-    }
-   
     @RequestMapping(value = "/getlocation", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public    List<Location> getByLocation() throws Exception {

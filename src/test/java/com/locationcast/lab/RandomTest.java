@@ -1,4 +1,4 @@
-package com.locationcast.repository;
+package com.locationcast.lab;
 
 import java.text.DecimalFormat;
 

@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import org.springframework.data.mongodb.core.mapping.event.MongoMappingEvent;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.locationcast.domain.User;
@@ -42,11 +45,23 @@ public class UserRepositoryImpl implements UserRepository,ApplicationListener<Mo
 		mongoOperation.insert(user);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
-	 */
+	public User findUserByUserName(String userName){
+		Query query = new Query();
+		query.addCriteria(Criteria.where(User.Fields.USERNAME.getFieldName()).is(userName));
+		User user = mongoOperation.findOne(query, User.class);
+		return user;
+	}
+
 	@Override
 	public void onApplicationEvent(MongoMappingEvent<User> event) {
-		 System.out.println(event.toString());
+	
+		if(event instanceof AfterSaveEvent){
+			
+			event = (AfterSaveEvent<User>) event;
+			User user = event.getSource();
+			
+			System.out.println(user.toString());
+		}
+		 
 	}
 }

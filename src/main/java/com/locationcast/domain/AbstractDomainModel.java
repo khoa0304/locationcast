@@ -13,7 +13,7 @@ import org.springframework.data.annotation.Id;
  * @since 0.1
  *
  */
-public class AbstractDocument implements Serializable{
+public class AbstractDomainModel implements Serializable{
 
 	
 	private static final long serialVersionUID = 3136223572483839806L;

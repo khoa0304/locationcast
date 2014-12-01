@@ -5,19 +5,19 @@ package com.locationcast.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @author Khoa
  *
  */
-
+@Document
 public class Poster implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
-	private long userId = 0l;
+	private long userId ;
 	
 	private String posterNickName = "";
 

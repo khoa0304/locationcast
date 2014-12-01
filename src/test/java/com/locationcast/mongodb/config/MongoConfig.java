@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -17,7 +18,8 @@ import com.mongodb.WriteConcern;
 @Configuration
 @EnableMongoRepositories
 //@ComponentScan(basePackages={"com.locationcast.repository"})
-@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
+//@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
+@ContextConfiguration(locations={"classpath*:META-INF/spring/integration/http-outbound-config.xml"})
 //@PropertySource({"classpath:application.properties","classpath:applicationContext.xml"})
 @PropertySource({"classpath:application.properties"})
 public class MongoConfig extends AbstractMongoConfiguration {

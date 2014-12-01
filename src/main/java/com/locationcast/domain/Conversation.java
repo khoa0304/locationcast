@@ -13,7 +13,7 @@ import com.locationcast.util.ConversationScope;
  * @since 0.1
  */
 @Document
-public class Conversation extends AbstractDocument {
+public class Conversation extends AbstractDomainModel {
 
 	private static final long serialVersionUID = 1L;
 
