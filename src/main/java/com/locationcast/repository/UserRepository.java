@@ -13,5 +13,12 @@ public interface UserRepository {
 
 	void insertUser(User user);
 	
-	User findUserByUserName(String userName);
+	User findUserByUserName(String userName, User.Fields field);
+
+	/**
+	 * @param id
+	 * @param idKey
+	 * @return
+	 */
+	User findUserById(long id, String idKey);
 }

@@ -19,8 +19,7 @@ import com.mongodb.WriteConcern;
 @EnableMongoRepositories
 //@ComponentScan(basePackages={"com.locationcast.repository"})
 //@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
-@ContextConfiguration(locations={"classpath*:META-INF/spring/integration/http-outbound-config.xml"})
-//@PropertySource({"classpath:application.properties","classpath:applicationContext.xml"})
+@ContextConfiguration(locations={"classpath*:META-INF/spring/integration/applicationContext.xml"})
 @PropertySource({"classpath:application.properties"})
 public class MongoConfig extends AbstractMongoConfiguration {
 

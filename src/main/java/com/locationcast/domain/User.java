@@ -27,7 +27,7 @@ public class User extends AbstractDomainModel implements Serializable {
 	
 	@Indexed(sparse=true,unique=true,
 			expireAfterSeconds=LocationCastConstant.SESSION_EXPIRATION_IN_SECOND)
-	private String nickName;
+	private String aliasName;
 	
 	private String firstName = null;
 	
@@ -43,10 +43,10 @@ public class User extends AbstractDomainModel implements Serializable {
 	
 	private String password = "";
 	
-	public static enum Fields{
+	public static enum Fields {
 		
 		USERNAME("userName"),
-		NICKNAME("nickName");
+		ALIASNAME("aliasName");
 		
 		private String fieldName;
 		
@@ -211,33 +211,20 @@ public class User extends AbstractDomainModel implements Serializable {
 		return this;
 	}
 	
-	public User buildUserObject(){
-		
-		User user = new User(this.userName,this.email,this.password);
-		if(this.firstName != null){
-			user.setFirstName(this.firstName);
-		}
-		if(this.lastName != null){
-			user.setLastName(this.lastName);
-		}
-		if(this.mobileNumber != null){
-			user.setMobileNumber(this.mobileNumber);
-		}
-		return user;
-	}
+	
 
 	/**
 	 * @return the nickName
 	 */
-	public String getNickName() {
-		return nickName;
+	public String getAliasName() {
+		return aliasName;
 	}
 
 	/**
 	 * @param nickName the nickName to set
 	 */
-	public User setNickName(String nickName) {
-		this.nickName = nickName;
+	public User setAliasName(String nickName) {
+		this.aliasName = nickName;
 		return this;
 	}
 	

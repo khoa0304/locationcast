@@ -13,24 +13,24 @@ import org.springframework.data.annotation.Id;
  * @since 0.1
  *
  */
-public class AbstractDomainModel implements Serializable{
+public abstract class AbstractDomainModel implements Serializable{
 
 	
 	private static final long serialVersionUID = 3136223572483839806L;
 
     protected Date lastModifiedDate;
 	
-    public static enum AbstractAttributeName{
+    public static enum AbstractIndexField{
     	
        id("id");
-	   public String name;
+	   public String idKey;
 	   
-	   private AbstractAttributeName(String name) {
-		this.name = name;
+	   private AbstractIndexField(String idKey) {
+		this.idKey = idKey;
 	   }
 	   
-	   public String getName(){
-		   return this.name;
+	   public String getIdKey(){
+		   return this.idKey;
 	   }
     }
     

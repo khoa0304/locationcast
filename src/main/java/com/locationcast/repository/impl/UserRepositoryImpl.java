@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository,ApplicationListener<Mo
 	
 	@Autowired
     @Qualifier("locationcastdb")
-	MongoOperations mongoOperation;
+	protected MongoOperations mongoOperation;
 	
 	@PostConstruct
 	public void createCollectionAndSetIndex(){
@@ -45,13 +45,23 @@ public class UserRepositoryImpl implements UserRepository,ApplicationListener<Mo
 		mongoOperation.insert(user);
 	}
 
-	public User findUserByUserName(String userName){
+	public User findUserByUserName(String userName, User.Fields field){
 		Query query = new Query();
-		query.addCriteria(Criteria.where(User.Fields.USERNAME.getFieldName()).is(userName));
+		query.addCriteria(Criteria.where(field.getFieldName()).is(userName));
 		User user = mongoOperation.findOne(query, User.class);
 		return user;
 	}
 
+
+	@Override
+	public User findUserById(long id, String idKey) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where(idKey).is(id));
+		User user = mongoOperation.findOne(query, User.class);
+		return user;
+	}
+
+	
 	@Override
 	public void onApplicationEvent(MongoMappingEvent<User> event) {
 	
@@ -64,4 +74,5 @@ public class UserRepositoryImpl implements UserRepository,ApplicationListener<Mo
 		}
 		 
 	}
+
 }

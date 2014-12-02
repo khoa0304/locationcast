@@ -3,31 +3,38 @@
  */
 package com.locationcast.rest;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import static com.locationcast.test.data.UserTestData.email;
+import static com.locationcast.test.data.UserTestData.nickName;
+import static com.locationcast.test.data.UserTestData.password;
+import static com.locationcast.test.data.UserTestData.userName;
+import static com.locationcast.util.LocationCastConstant.USER_REST_SERVICE_PATH.USER_REGISTER_PATH;
+import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.fest.assertions.AssertExtension;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import org.springframework.security.crypto.codec.Base64;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import org.springframework.test.web.client.MockRestServiceServer;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpMessageConverterExtractor;
-import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.locationcast.domain.User;
+import com.locationcast.exception.DuplicatedDomainModelException;
 
 /**
  * @author Khoa
@@ -35,67 +42,120 @@ import com.locationcast.domain.User;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@WebAppConfiguration
-//@IntegrationTest("server.port:8080")
-//@PropertySource({ "classpath:application.properties"})
-@ContextConfiguration(locations={"classpath*:META-INF/spring/integration/http-outbound-config.xml"})
-public class UserServiceRestAPIsTest {
+@ContextConfiguration(locations = { "classpath*:META-INF/spring/integration/http-outbound-config.xml","classpath*:applicationContext.xml" })
 
+public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
+
+	
+	@Autowired
+	protected  ApplicationContext applicationContext;
+	
 	@Autowired
 	private RestTemplate restTemplate;
 
-	//private MockRestServiceServer mockServer;
+	// private MockRestServiceServer mockServer;
 
 	private HttpMessageConverterExtractor<User> responseExtractor;
 
-	
 	@Autowired
 	private ObjectMapper jaxbJacksonObjectMapper;
 
+
+	protected MongoOperations mongoOperation;
+	
 	@Before
 	public void setUp() throws Exception {
-	//	this.mockServer = MockRestServiceServer.createServer(restTemplate);
+		// this.mockServer = MockRestServiceServer.createServer(restTemplate);
 		responseExtractor = new HttpMessageConverterExtractor<User>(User.class,
 				restTemplate.getMessageConverters());
 		
+		mongoOperation = (MongoOperations) applicationContext
+				.getBean("locationcastdb");
+		
+		assertNotNull(mongoOperation);
 	}
 
 	@After
-	public void tearDown(){}
+	public void tearDown() {
+	}
+
+	// @Test
+	// public void testRest() {
+	//
+	// final String fullUrl = userServiceURL;
+	// User user = restTemplate.execute(fullUrl, HttpMethod.POST, new
+	// RequestCallback() {
+	//
+	// @Override
+	// public void doWithRequest(ClientHttpRequest request)
+	// throws IOException {
+	// HttpHeaders headers = getHttpHeadersWithUserCredentials(request);
+	// headers.add("Accept", "application/json");
+	// }
+	// }, responseExtractor, getUser());
+	//
+	// System.out.print(user);
+	// }
+	
+	final String fullUrl = getRestURLPrefix() + USER_REGISTER_PATH;
 	
 	@Test
-	public void testRest() {
-		final String fullUrl = "http://localhost:8080/LocationCast/rest/user/test";
-		User user = restTemplate.execute(fullUrl, HttpMethod.GET, new RequestCallback() {
+	public void testRegisterUser() {
 
-			@Override
-			public void doWithRequest(ClientHttpRequest request)
-					throws IOException {
-				HttpHeaders headers = getHttpHeadersWithUserCredentials(request);
-				headers.add("Accept", "application/json");
-			}
-		}, responseExtractor, new Object());
+		dropAndCreateUserCollection();
+		HttpEntity<User> entity = getHttpEntityUser();
 		
-		System.out.print(user);
+		try {
+			ResponseEntity<User> result = restTemplate.exchange(fullUrl,HttpMethod.POST, entity, User.class);
+			User returnedUser = result.getBody();
+			assertEquals(getUser().getAliasName(), returnedUser.getAliasName());
+		} catch (Exception e) {
+			assertNotNull("Error resgistering new user", e);
+		}
 	}
 
-	private HttpHeaders getHttpHeadersWithUserCredentials(
-			ClientHttpRequest request) {
-		return (getHttpHeadersWithUserCredentials(request.getHeaders()));
+	@Test 
+	public void testRegisterDuplicatedUser() {
+
+		HttpEntity<User> entity = getHttpEntityUser();
+		HttpClientErrorException e = null;
+		try {
+			ResponseEntity<User> result = restTemplate.exchange(fullUrl,HttpMethod.POST, entity, User.class);
+		    assertFalse("Should not reach here. Expect DuplicatedDomainModelException.",true);
+		} catch (HttpClientErrorException e1) {
+			e = e1;
+		}
+		System.out.println( e.getResponseBodyAsString());
+		assertNotNull("Expected DuplicatedDomainModelException when resgistering duplicated user", e.getResponseBodyAsString());
 	}
+	
+	protected HttpEntity<User> getHttpEntityUser(){
+		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 
-	private HttpHeaders getHttpHeadersWithUserCredentials(HttpHeaders headers) {
+		// Prepare header
+		HttpHeaders headers = new HttpHeaders();
+		headers = getHttpHeadersWithUserCredentials(headers);
+		headers.setAccept(acceptableMediaTypes);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		// Pass the new person and header
+		HttpEntity<User> entity = new HttpEntity<User>(getUser(), headers);
+		return entity;
+	}
+	private void dropAndCreateUserCollection(){
+		if(mongoOperation.collectionExists(User.class)){
+			mongoOperation.dropCollection(User.class);
+			mongoOperation.createCollection(User.class);
+		}
+	}
+	
 
-		String username = "user";
-		String password = "welcome";
+	private User getUser() {
+		User user = new User();
+		user = user.setUserName(userName).setAliasName(nickName)
+				.setEmail(email).setPassword(password);
 
-		String combinedUsernamePassword = username + ":" + password;
-		byte[] base64Token = Base64.encode(combinedUsernamePassword.getBytes());
-		String base64EncodedToken = new String(base64Token);
-		// adding Authorization header for HTTP Basic authentication
-		headers.add("Authorization", "Basic  " + base64EncodedToken);
-
-		return headers;
+		return user;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.locationcast.domain.ErrorMessage;
+import com.locationcast.exception.DuplicatedDomainModelException;
 import com.locationcast.exception.InvalidDomainModelException;
 
 /**
@@ -32,4 +33,16 @@ public class CustomResponseEntityExceptionHandler {
     	ErrorMessage em = new ErrorMessage(e.toString());
     	return em;
     }
+    
+    
+    @ExceptionHandler(DuplicatedDomainModelException.class)
+    @ResponseStatus(value=HttpStatus.CONFLICT)
+    @ResponseBody
+    public ErrorMessage handleDuplicatedEntity(DuplicatedDomainModelException e){
+    	
+    	logger.warn(e.toString());
+    	ErrorMessage em = new ErrorMessage(e.toString());
+    	return em;
+    }
+    
 }

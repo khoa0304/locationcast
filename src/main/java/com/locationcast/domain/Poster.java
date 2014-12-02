@@ -19,7 +19,7 @@ public class Poster implements Serializable {
 	
 	private long userId ;
 	
-	private String posterNickName = "";
+	private String aliasUserName = "";
 
 	/**
 	 * @return the userId
@@ -36,17 +36,19 @@ public class Poster implements Serializable {
 	}
 
 	/**
-	 * @return the posterNickName
+	 * @return the aliasUserName
 	 */
-	public String getPosterNickName() {
-		return posterNickName;
+	public String getAliasUserName() {
+		return aliasUserName;
 	}
 
 	/**
-	 * @param posterNickName the posterNickName to set
+	 * @param aliasUserName the aliasUserName to set
 	 */
-	public void setPosterNickName(String posterNickName) {
-		this.posterNickName = posterNickName;
+	public void setAliasUserName(String aliasUserName) {
+		this.aliasUserName = aliasUserName;
 	}
+
+	
 	
 }

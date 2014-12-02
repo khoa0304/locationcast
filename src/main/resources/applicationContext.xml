@@ -51,13 +51,13 @@
 		<constructor-arg name="databaseName" value="locationcast" />
 	</bean>
 
-	<!--  -->
+	<!--  
 	<bean id="testTemplateDB" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg name="databaseName" value="unitTest" />
 	</bean>
 	
-	
+	-->
 
 
 

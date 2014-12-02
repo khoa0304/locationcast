@@ -3,12 +3,13 @@
  */
 package com.locationcast.facade.impl;
 
-import javax.annotation.PreDestroy;
+import javax.swing.text.AbstractDocument;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.locationcast.domain.AbstractDomainModel;
 import com.locationcast.domain.User;
 import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.UserFacade;
@@ -32,10 +33,7 @@ public class UserFacadeImpl implements UserFacade {
 	@Autowired
 	UserValidation userValidation;
 	
-	@PreDestroy
-	public void init(){
-		System.out.println("Test");
-	}
+
 	public boolean createUser(User user) throws InvalidDomainModelException{
 		
 		userValidation.validateBasicUserRegistrationInfo(user);
@@ -47,16 +45,28 @@ public class UserFacadeImpl implements UserFacade {
 	
 	
 	@Override
-	public User findUser(User user) {
+	public User findUserByIndexFields(User user) {
 		
 		User queriedUser = null;
 		
 		if(!StringUtils.isEmpty(user.getUserName())){
-		    queriedUser = userRepository.findUserByUserName(user.getUserName());
+		    queriedUser = userRepository.findUserByUserName(user.getUserName(),User.Fields.USERNAME);
 		}
 		
+		else if(!StringUtils.isEmpty(user.getAliasName())){
+		    queriedUser = userRepository.findUserByUserName(user.getAliasName(),User.Fields.ALIASNAME);
+		}
+			
 		return queriedUser;
 			
+	}
+	
+	public User findUserById(long id){
+		User queriedUser = null;
+		queriedUser = userRepository.findUserById(id,AbstractDomainModel.AbstractIndexField.id.getIdKey());
+		
+		return queriedUser;
+		
 	}
 	
   
