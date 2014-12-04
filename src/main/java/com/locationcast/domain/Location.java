@@ -33,6 +33,7 @@ public class Location implements Serializable {
 	}
 
 	private long id;
+	
 	private double[] point;
 
 	

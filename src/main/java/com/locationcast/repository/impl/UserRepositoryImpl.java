@@ -7,10 +7,6 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationListener;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import org.springframework.data.mongodb.core.mapping.event.MongoMappingEvent;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -25,13 +21,9 @@ import com.locationcast.repository.UserRepository;
  *
  */
 @Repository
-public class UserRepositoryImpl implements UserRepository,ApplicationListener<MongoMappingEvent<User>>{
+public class UserRepositoryImpl extends AbstractRepository<User> implements UserRepository{
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
-	
-	@Autowired
-    @Qualifier("locationcastdb")
-	protected MongoOperations mongoOperation;
 	
 	@PostConstruct
 	public void createCollectionAndSetIndex(){
@@ -74,5 +66,7 @@ public class UserRepositoryImpl implements UserRepository,ApplicationListener<Mo
 		}
 		 
 	}
+
+	
 
 }
