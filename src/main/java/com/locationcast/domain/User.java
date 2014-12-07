@@ -25,8 +25,6 @@ public class User extends AbstractDomainModel implements Serializable {
 			expireAfterSeconds=LocationCastConstant.SESSION_EXPIRATION_IN_SECOND)
 	private String userName;
 	
-	@Indexed(sparse=true,unique=true,
-			expireAfterSeconds=LocationCastConstant.SESSION_EXPIRATION_IN_SECOND)
 	private String aliasName;
 	
 	private String firstName = null;
@@ -43,14 +41,14 @@ public class User extends AbstractDomainModel implements Serializable {
 	
 	private String password = "";
 	
-	public static enum Fields {
+	public static enum FieldNames {
 		
 		USERNAME("userName"),
 		ALIASNAME("aliasName");
 		
 		private String fieldName;
 		
-		Fields(String fieldName){
+		FieldNames(String fieldName){
 			this.fieldName = fieldName;
 		}
 		

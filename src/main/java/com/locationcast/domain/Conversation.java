@@ -35,13 +35,29 @@ public class Conversation extends AbstractDomainModel {
 	
 	private ConversationScope scope = ConversationScope.PROTECTED;
 	
-	private Location location;
+	private double[] longAndLat;
 	
+	public static enum FieldNames{
 	
+		LongAndLat("longAndLat");
+
+		private String fieldName;
+		
+		FieldNames(String fieldName){
+			this.fieldName = fieldName;
+		}
+		
+		/**
+		 * @return the fieldName
+		 */
+		public String getFieldName() {
+			return fieldName;
+		}
+	}
 	
 	public Conversation(Poster poster, double[] longitudeAndLatitude){
 		this.poster = poster;
-		this.location = new Location(longitudeAndLatitude);
+		this.longAndLat = longitudeAndLatitude;
 	}
 
 	/**
@@ -175,14 +191,24 @@ public class Conversation extends AbstractDomainModel {
 	 * @return the location
 	 */
 	public Location getLocation() {
-		return location;
+		return new Location(longAndLat);
 	}
 
 	/**
-	 * @param location the location to set
+	
+
+	/**
+	 * @return the longAndLat
 	 */
-	public void setLocation(Location location) {
-		this.location = location;
+	public double[] getLongAndLat() {
+		return longAndLat;
+	}
+
+	/**
+	 * @param longAndLat the longAndLat to set
+	 */
+	public void setLongAndLat(double[] longAndLat) {
+		this.longAndLat = longAndLat;
 	}
 
 }

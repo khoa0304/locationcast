@@ -51,7 +51,7 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 		mongoOperation.createCollection(Location.class);
 
 		GeospatialIndex geoIndex = new GeospatialIndex(
-				Location.AttributeNames.point.getName());
+				Location.AttributeNames.longAndLat.getName());
 		geoIndex.typed(GeoSpatialIndexType.GEO_2D);
 		indexOp.ensureIndex(geoIndex);
 
@@ -85,12 +85,7 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 		}
 		mongoOperation.insertAll(longLatArrayLits);
 
-		Query query = new Query();
-		query.addCriteria(Criteria.where(Location.AttributeNames.id.getName())
-				.gt(0));
-		long totalRecord = mongoOperation.count(query, Location.class);
-		System.out.println(" Total record: " + totalRecord);
-		assertTrue(totalRecord > numberOfCoordinate-3);
+
 	}
 
 	@Test
@@ -100,8 +95,7 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 				new Point(startingLongitude, startingLatitude)).maxDistance(
 				getInMile(0.0001));
 		Query query = new Query(criteria);
-		query.with(new Sort(Sort.Direction.ASC, Location.AttributeNames.id
-				.getName()));
+		
 		List<Location> locationList = mongoOperation
 				.find(query, Location.class);
 		System.out.println("Total location : " + locationList.size());

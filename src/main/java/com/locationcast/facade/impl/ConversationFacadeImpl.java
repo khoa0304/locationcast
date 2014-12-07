@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.locationcast.domain.Conversation;
+import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.ConversationFacade;
 import com.locationcast.facade.ConversationValidation;
 import com.locationcast.repository.ConversationRepository;
@@ -24,9 +25,9 @@ public class ConversationFacadeImpl implements ConversationFacade {
 	@Autowired
 	ConversationValidation conversationValidator;
 	
-	public void createConversation(Conversation conversation){
+	public void createConversation(Conversation conversation) throws InvalidDomainModelException{
 		
-		
+		conversationValidator.validationBasicConversationInfo(conversation);
 		conversationRepos.insertConversation(conversation);
 	}
 	

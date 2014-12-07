@@ -1,9 +1,6 @@
 package com.locationcast.domain;
 
-import java.io.Serializable;
 import java.util.Arrays;
-
-import org.springframework.data.annotation.Transient;
 
 /**
  * 
@@ -11,14 +8,11 @@ import org.springframework.data.annotation.Transient;
  * @since 0.1
  */
 
-public class Location implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Location{
 
 	public static enum AttributeNames{
 	   
-	   id("id"),
-	   point("point");
+	   longAndLat("longAndLat");
 	   
 	   public String name;
 	   
@@ -32,45 +26,25 @@ public class Location implements Serializable {
 	   
 	}
 
-	private long id;
+	private double[] longAndLat;
 	
-	private double[] point;
-
-	
-	@Transient
 	private double latitute;
-	@Transient
 	private double logitute;
 
 	
 	public Location(){};
 	
 	public Location(double[]  location){
-		this.point = location;
+		this.longAndLat = location;
 	}
 	
 	public Location(long id, double[]  point){
-		this.id = id;
-		this.point = point;
-	}
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
+		this.longAndLat = point;
 	}
 
 	public double getLatitute() {
-		if (point != null) {
-			this.latitute = point[1];
+		if (longAndLat != null) {
+			this.latitute = longAndLat[1];
 		}
 		return latitute;
 	}
@@ -80,8 +54,8 @@ public class Location implements Serializable {
 	}
 
 	public double getLogitute() {
-		if (point != null) {
-			this.logitute = point[0];
+		if (longAndLat != null) {
+			this.logitute = longAndLat[0];
 		}
 		return logitute;
 	}
@@ -91,16 +65,16 @@ public class Location implements Serializable {
 	}
 
 	public void setLocation(double[] point) {
-		this.point = point;
+		this.longAndLat = point;
 	}
 
 	public double[] getLocation() {
-		return point;
+		return longAndLat;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [id=" + id + ", location=" + Arrays.toString(point)+ "]";
+		return "Longitude And Latitude [=" + Arrays.toString(longAndLat)+ "]";
 	}
 
 }

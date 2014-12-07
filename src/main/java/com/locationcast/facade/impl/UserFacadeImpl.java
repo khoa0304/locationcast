@@ -50,11 +50,11 @@ public class UserFacadeImpl implements UserFacade {
 		User queriedUser = null;
 		
 		if(!StringUtils.isEmpty(user.getUserName())){
-		    queriedUser = userRepository.findUserByUserName(user.getUserName(),User.Fields.USERNAME);
+		    queriedUser = userRepository.findUserByUserName(user.getUserName(),User.FieldNames.USERNAME);
 		}
 		
 		else if(!StringUtils.isEmpty(user.getAliasName())){
-		    queriedUser = userRepository.findUserByUserName(user.getAliasName(),User.Fields.ALIASNAME);
+		    queriedUser = userRepository.findUserByUserName(user.getAliasName(),User.FieldNames.ALIASNAME);
 		}
 			
 		return queriedUser;

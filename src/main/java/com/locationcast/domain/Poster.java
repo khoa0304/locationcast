@@ -17,6 +17,7 @@ public class Poster implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	
 	private long userId ;
 	
 	private String aliasUserName = "";
