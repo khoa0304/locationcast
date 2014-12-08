@@ -17,10 +17,10 @@
 
 	<context:component-scan
 		base-package="com.locationcast.rest,
-					 com.locationcast.repository,
 					 com.locationcast.repository.impl,
-		             com.locationcast.facade,com.locationcast.facade.impl,
-		             com.locationcast.factory,com.locationcast.factory.impl" />
+		             com.locationcast.facade.impl,
+		             com.locationcast.factory.impl,
+		             com.locationcast.event" />
 
 
 

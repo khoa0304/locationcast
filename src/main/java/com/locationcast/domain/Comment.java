@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @author Khoa
  *
  */
+
 public class Comment extends AbstractDomainModel implements Serializable{
 
 	private static final long serialVersionUID = 1L;

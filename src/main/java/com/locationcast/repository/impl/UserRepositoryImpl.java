@@ -7,14 +7,12 @@ import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.DefaultIndexOperations;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import org.springframework.data.mongodb.core.mapping.event.MongoMappingEvent;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.locationcast.domain.Conversation;
 import com.locationcast.domain.User;
 import com.locationcast.repository.UserRepository;
 
@@ -32,9 +30,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		if(!mongoOperation.collectionExists(User.class)){
 			mongoOperation.createCollection(User.class);
 		}
-		
-		DefaultIndexOperations indexOp = new DefaultIndexOperations(
-				mongoOperation, User.class.getSimpleName());
 		
 	}
 	
@@ -63,6 +58,10 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public void onApplicationEvent(MongoMappingEvent<User> event) {
 	
+		if(!(event.getSource() instanceof User)){
+			return;
+		}
+		
 		if(event instanceof AfterSaveEvent){
 			
 			event = (AfterSaveEvent<User>) event;

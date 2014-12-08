@@ -3,6 +3,8 @@
  */
 package com.locationcast.facade.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,11 @@ public class ConversationFacadeImpl implements ConversationFacade {
 		
 		conversationValidator.validationBasicConversationInfo(conversation);
 		conversationRepos.insertConversation(conversation);
+	}
+	
+	public List<Conversation> findConverstaionByContentKeyWords(String[] words){
+		List<Conversation> conversationList = conversationRepos.findConverstaionByContentKeyWords(words);
+		return conversationList;
 	}
 	
 }

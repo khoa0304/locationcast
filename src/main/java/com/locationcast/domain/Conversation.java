@@ -71,8 +71,9 @@ public class Conversation extends AbstractDomainModel {
 	 * @param content
 	 *            the content to set
 	 */
-	public void setContent(Content content) {
+	public Conversation setContent(Content content) {
 		this.content = content;
+		return this;
 	}
 
 	/**

@@ -5,13 +5,10 @@ package com.locationcast.domain;
 
 import java.io.Serializable;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 /**
  * @author Khoa
  *
  */
-@Document
 public class Poster implements Serializable {
 
 	

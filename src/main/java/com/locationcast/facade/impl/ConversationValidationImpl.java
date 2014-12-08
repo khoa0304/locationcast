@@ -23,6 +23,10 @@ public class ConversationValidationImpl implements ConversationValidation {
 			throw new InvalidDomainModelException(conversation,"Missing Info About the User who posted the conversation");
 		}
 		
+		if(conversation.getLongAndLat() == null){
+			throw new InvalidDomainModelException(conversation,"Missing Info About the location where the conversation was created.");
+		}
+		
 		if(StringUtils.isEmpty(conversation.getContent())){
 			throw new InvalidDomainModelException(conversation," Content should not be emptied");
 		}

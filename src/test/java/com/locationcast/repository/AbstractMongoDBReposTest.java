@@ -3,12 +3,17 @@ package com.locationcast.repository;
 import static org.testng.Assert.assertNotNull;
 
 import org.junit.BeforeClass;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.locationcast.mongodb.config.MongoConfig;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
 public abstract class AbstractMongoDBReposTest {
 
 	protected static ApplicationContext applicationContext;
@@ -24,7 +29,7 @@ public abstract class AbstractMongoDBReposTest {
 		assertNotNull(applicationContext);
 		
 		mongoOperation = (MongoOperations) applicationContext
-				.getBean("testTemplateDB");
+				.getBean("locationcastdb");
 		
 		assertNotNull(mongoOperation);
 	}

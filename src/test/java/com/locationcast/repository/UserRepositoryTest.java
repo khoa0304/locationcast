@@ -12,43 +12,24 @@ import static org.testng.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.locationcast.domain.User;
 import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.UserFacade;
-import com.locationcast.facade.impl.UserFacadeImpl;
 /**
  * @author Khoa
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
-public class UserRepositoryTest {
+
+public class UserRepositoryTest extends AbstractMongoDBReposTest {
 	
 	@Autowired
-	protected  ApplicationContext applicationContext;
-
-	protected static MongoOperations mongoOperation = null;
-	
-    UserFacade userFacade = null;
+    UserFacade userFacade;
 	
 	@Before
 	public void initClass(){
-		
-		userFacade = applicationContext.getBean(UserFacadeImpl.class);
-		assertNotNull(userFacade);
-		
-		mongoOperation = (MongoOperations) applicationContext
-				.getBean("locationcastdb");
-		
-		assertNotNull(mongoOperation);
-		
+
 		if(mongoOperation.collectionExists(User.class)){
 			mongoOperation.dropCollection(User.class);
 			mongoOperation.createCollection(User.class);

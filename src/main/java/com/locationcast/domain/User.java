@@ -226,4 +226,11 @@ public class User extends AbstractDomainModel implements Serializable {
 		return this;
 	}
 	
+	public Poster getPoster(){
+		Poster poster = new Poster();
+		poster.setAliasUserName(this.aliasName);
+		poster.setUserId(this.id);
+		return poster;
+	}
+	
 }

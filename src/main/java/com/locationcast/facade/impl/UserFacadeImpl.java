@@ -3,8 +3,6 @@
  */
 package com.locationcast.facade.impl;
 
-import javax.swing.text.AbstractDocument;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
