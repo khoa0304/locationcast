@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.index.TextIndexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Khoa
@@ -19,7 +20,7 @@ public class Content implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@TextIndexed
+	//@TextIndexed
 	private String contentString = "";
 	
 	private String hrefLink = "";

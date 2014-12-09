@@ -5,6 +5,8 @@ package com.locationcast.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 /**
  * @author Khoa
  *
@@ -14,12 +16,14 @@ public class Comment extends AbstractDomainModel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	@Field(value="poster")
 	private Poster poster;
 	
 	private int likeCounter = 0;
 	
 	private int dislikeCounter = 0;
 	
+	@Field(value="content")
 	private Content content = null;
 	
 

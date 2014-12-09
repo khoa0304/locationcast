@@ -2,6 +2,9 @@ package com.locationcast.repository;
 
 import static org.testng.Assert.assertNotNull;
 
+import java.util.Set;
+
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
@@ -32,5 +35,22 @@ public abstract class AbstractMongoDBReposTest {
 				.getBean("locationcastdb");
 		
 		assertNotNull(mongoOperation);
+		
+		
+		
+		
 	}
+	
+//	@AfterClass
+//	public static void cleanupCollection(){
+//
+//		Set<String> collectionSet = mongoOperation.getCollectionNames();
+//		
+//		for(String collectionName : collectionSet){
+//			
+//			mongoOperation.dropCollection(collectionName);
+//			System.out.println("Dropped collection: "+collectionName);
+//		}
+//	}
+	
 }

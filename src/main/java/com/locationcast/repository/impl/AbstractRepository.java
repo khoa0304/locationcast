@@ -18,6 +18,8 @@ public abstract class AbstractRepository<T> implements ApplicationListener<Mongo
 	@Autowired
     @Qualifier("locationcastdb")
 	protected MongoOperations mongoOperation;
+	
+	
 
 	public abstract void onApplicationEvent(MongoMappingEvent<T> event);
 }

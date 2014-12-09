@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.locationcast.util.ConversationScope;
 
@@ -12,13 +13,15 @@ import com.locationcast.util.ConversationScope;
  * @author Khoa
  * @since 0.1
  */
-@Document
+@Document(collection="Conversation")
 public class Conversation extends AbstractDomainModel {
 
 	private static final long serialVersionUID = 1L;
 
+	@Field(value="poster")
 	private Poster poster = null;
 	
+    //@Field(value="content")
 	private Content content = null;
 	
 	private String title = "";
@@ -29,6 +32,7 @@ public class Conversation extends AbstractDomainModel {
 	
 	private int overAllRatingLevel;
 	
+	@Field(value="comments")
 	private List<Comment> comments = new ArrayList<Comment>();
 	
 	private long topicId;
@@ -55,9 +59,9 @@ public class Conversation extends AbstractDomainModel {
 		}
 	}
 	
-	public Conversation(Poster poster, double[] longitudeAndLatitude){
+	public Conversation(Poster poster, double[] longAndLat){
 		this.poster = poster;
-		this.longAndLat = longitudeAndLatitude;
+		this.longAndLat = longAndLat;
 	}
 
 	/**
