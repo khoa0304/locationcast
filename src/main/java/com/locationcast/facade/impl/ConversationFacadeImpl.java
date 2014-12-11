@@ -28,14 +28,21 @@ public class ConversationFacadeImpl implements ConversationFacade {
 	ConversationValidation conversationValidator;
 	
 	public void createConversation(Conversation conversation) throws InvalidDomainModelException{
-		
 		conversationValidator.validationBasicConversationInfo(conversation);
 		conversationRepos.insertConversation(conversation);
 	}
 	
 	public List<Conversation> findConverstaionByContentKeyWords(String[] words){
+//		if(words == null){
+//			throw new IllegalArgumentException(s)
+//		}
 		List<Conversation> conversationList = conversationRepos.findConverstaionByContentKeyWords(words);
 		return conversationList;
+	}
+	
+	public List<Conversation> findConversationsByLongitudeAndLatitude(double[] longitudeAndLatitude){
+		
+		return conversationRepos.findConversationByLongitudeAndLatitude(longitudeAndLatitude);
 	}
 	
 }

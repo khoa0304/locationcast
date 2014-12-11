@@ -61,7 +61,7 @@ public class UserFacadeImpl implements UserFacade {
 	
 	public User findUserById(long id){
 		User queriedUser = null;
-		queriedUser = userRepository.findUserById(id,AbstractDomainModel.AbstractIndexField.id.getIdKey());
+		queriedUser = userRepository.findUserById(id,AbstractDomainModel.IndexFieldNames.id.getIdKey());
 		
 		return queriedUser;
 		

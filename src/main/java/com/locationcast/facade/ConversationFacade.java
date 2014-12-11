@@ -18,4 +18,6 @@ public interface ConversationFacade {
 	void createConversation(Conversation conversation) throws InvalidDomainModelException;
 	
 	List<Conversation> findConverstaionByContentKeyWords(String[] words);
+	
+	List<Conversation> findConversationsByLongitudeAndLatitude(double[] longitudeAndLatitude);
 }

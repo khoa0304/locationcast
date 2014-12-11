@@ -12,7 +12,7 @@ public class Location{
 
 	public static enum AttributeNames{
 	   
-	   longAndLat("longAndLat");
+	   longAndLat("longitudeLatitude");
 	   
 	   public String name;
 	   
@@ -26,7 +26,7 @@ public class Location{
 	   
 	}
 
-	private double[] longAndLat;
+	private double[] longitudeLatitude;
 	
 	private double latitute;
 	private double logitute;
@@ -35,16 +35,16 @@ public class Location{
 	public Location(){};
 	
 	public Location(double[]  location){
-		this.longAndLat = location;
+		this.longitudeLatitude = location;
 	}
 	
 	public Location(long id, double[]  point){
-		this.longAndLat = point;
+		this.longitudeLatitude = point;
 	}
 
 	public double getLatitute() {
-		if (longAndLat != null) {
-			this.latitute = longAndLat[1];
+		if (longitudeLatitude != null) {
+			this.latitute = longitudeLatitude[1];
 		}
 		return latitute;
 	}
@@ -54,8 +54,8 @@ public class Location{
 	}
 
 	public double getLogitute() {
-		if (longAndLat != null) {
-			this.logitute = longAndLat[0];
+		if (longitudeLatitude != null) {
+			this.logitute = longitudeLatitude[0];
 		}
 		return logitute;
 	}
@@ -65,16 +65,16 @@ public class Location{
 	}
 
 	public void setLocation(double[] point) {
-		this.longAndLat = point;
+		this.longitudeLatitude = point;
 	}
 
 	public double[] getLocation() {
-		return longAndLat;
+		return longitudeLatitude;
 	}
 
 	@Override
 	public String toString() {
-		return "Longitude And Latitude [=" + Arrays.toString(longAndLat)+ "]";
+		return "Longitude And Latitude [=" + Arrays.toString(longitudeLatitude)+ "]";
 	}
 
 }

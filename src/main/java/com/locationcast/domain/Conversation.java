@@ -43,8 +43,10 @@ public class Conversation extends AbstractDomainModel {
 	
 	public static enum FieldNames{
 	
-		LongAndLat("longAndLat");
-
+		LongAndLat("longAndLat"),
+		Content("content"),
+		ConentString("content.contentString");
+		
 		private String fieldName;
 		
 		FieldNames(String fieldName){

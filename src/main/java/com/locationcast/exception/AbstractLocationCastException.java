@@ -16,30 +16,34 @@ public abstract class AbstractLocationCastException extends Exception {
 
 	private long occuredTime = System.currentTimeMillis();
 	
-	protected String message = "";
+	protected String messageKey = "";
 	
 	private AbstractDomainModel domainModel;
 
 	/**
 	 * 
 	 */
-	public AbstractLocationCastException(AbstractDomainModel domainModel, String msg) {
+	public AbstractLocationCastException(AbstractDomainModel domainModel, String messageKey) {
 		this.domainModel = domainModel;
-		this.message = msg;
+		this.messageKey = messageKey;
 	}
 	
 	public long getOccuredTime(){
 		return this.occuredTime;
 	}
 	
-	public String getMessage(){
-		return this.message;
+	public String getMessageKey(){
+		return this.messageKey;
+	}
+	
+	public AbstractDomainModel getDomainModel(){
+		return this.domainModel;
 	}
 	
 	
 	@Override
 	public String toString(){
-		String reason = String.format("Exception class %s - Reason: %s - Domain Model: %s",InvalidDomainModelException.class.getSimpleName(), this.message,this.domainModel.toString());
+		String reason = String.format("Exception class %s - Reason: %s - Domain Model: %s",InvalidDomainModelException.class.getSimpleName(), this.messageKey,this.domainModel.toString());
 		return reason;
 	}
 }

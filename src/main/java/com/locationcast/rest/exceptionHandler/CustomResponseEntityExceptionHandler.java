@@ -3,6 +3,8 @@
  */
 package com.locationcast.rest.exceptionHandler;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ import com.locationcast.exception.InvalidDomainModelException;
  *
  */
 @ControllerAdvice
-public class CustomResponseEntityExceptionHandler {
+public class CustomResponseEntityExceptionHandler extends AbstractExceptionHandler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomResponseEntityExceptionHandler.class);
  
@@ -28,9 +30,9 @@ public class CustomResponseEntityExceptionHandler {
     @ResponseStatus(value=HttpStatus.NOT_ACCEPTABLE)
     @ResponseBody
     public ErrorMessage handleInvalidEntity(InvalidDomainModelException e){
-    	
-    	logger.warn(e.toString());
-    	ErrorMessage em = new ErrorMessage(e.toString());
+    	String errorMessage = getResourceBundle().getMessage(e.getMessageKey(), new Object[]{ e.getDomainModel()},Locale.getDefault());
+    	logger.error(errorMessage);
+    	ErrorMessage em = new ErrorMessage(errorMessage);
     	return em;
     }
     
@@ -45,4 +47,13 @@ public class CustomResponseEntityExceptionHandler {
     	return em;
     }
     
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value=HttpStatus.CONFLICT)
+    @ResponseBody
+    public ErrorMessage handleIllegalArgumentException(IllegalArgumentException e){
+    	
+    	logger.warn(e.toString());
+    	ErrorMessage em = new ErrorMessage(e.toString());
+    	return em;
+    }
 }

@@ -1,32 +1,24 @@
 package com.locationcast.repository;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.runner.RunWith;
-import org.springframework.data.domain.Sort;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.DefaultIndexOperations;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeospatialIndex;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import com.locationcast.domain.Location;
-import com.locationcast.mongodb.config.MongoConfig;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { MongoConfig.class })
+
 public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 
 	// @Rule
@@ -40,16 +32,21 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 
 	public static final Double MILE_PER_DEGREE = 69.0d;
 
+	public static final String collectionName = Location.class.getSimpleName();
 	@BeforeClass
-	public void init() {
+	public static void init() {
 
+		
+
+    	
+//		mongoOperation.createCollection(Location.class);
+		
+		
+		mongoOperation.dropCollection(collectionName);
+		
 		DefaultIndexOperations indexOp = new DefaultIndexOperations(
-				mongoOperation, Location.class.getSimpleName().toLowerCase());
+				mongoOperation, collectionName);
 		indexOp.dropAllIndexes();
-
-		mongoOperation.dropCollection(Location.class);
-		mongoOperation.createCollection(Location.class);
-
 		GeospatialIndex geoIndex = new GeospatialIndex(
 				Location.AttributeNames.longAndLat.getName());
 		geoIndex.typed(GeoSpatialIndexType.GEO_2D);
@@ -68,7 +65,7 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 			Location location = new Location(i, coordiate);
 			longLatArrayLits.add(location);
 		}
-		mongoOperation.insertAll(longLatArrayLits);
+		mongoOperation.insert(longLatArrayLits,collectionName);
 
 		longLatArray = getLongitudeLatitudeDataset(DecrementFactor);
 		longLatArrayLits = new ArrayList<Location>(longLatArray.length);
@@ -83,27 +80,32 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 			Location location = new Location(i, coordiate);
 			longLatArrayLits.add(location);
 		}
-		mongoOperation.insertAll(longLatArrayLits);
+		mongoOperation.insert(longLatArrayLits,collectionName);
 
 
+	}
+
+	@AfterClass
+	public static void tearDown(){
+		mongoOperation.dropCollection(collectionName);
 	}
 
 	@Test
 	public void testQueryForMaxDistanceInMile() {
 
-		Criteria criteria = new Criteria("point").near(
+		Criteria criteria = new Criteria(Location.AttributeNames.longAndLat.getName()).near(
 				new Point(startingLongitude, startingLatitude)).maxDistance(
-				getInMile(0.0001));
+				getInMile(0.00001));
 		Query query = new Query(criteria);
 		
 		List<Location> locationList = mongoOperation
-				.find(query, Location.class);
+				.find(query, Location.class,collectionName);
 		System.out.println("Total location : " + locationList.size());
 		for (Location location : locationList) {
 			System.out.println(location);
 		}
 		
-		assertEquals(4, locationList.size());
+		assertEquals(2, locationList.size());
 	}
 
 	
@@ -131,7 +133,6 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 
 	// 37.300000 37.5
 
-	@DataProvider(name = "longitudeAndLatitude")
 	public static double[][] getLongitudeLatitudeDataset(double fraction) {
 		double startingLatitude = 37.319337;
 		double startingLongitude = -121.839370;

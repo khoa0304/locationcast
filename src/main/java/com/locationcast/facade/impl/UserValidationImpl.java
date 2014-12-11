@@ -19,13 +19,13 @@ public class UserValidationImpl implements UserValidation{
 
 	public void validateBasicUserRegistrationInfo(User user) throws InvalidDomainModelException{
 		if(StringUtils.isEmpty(user.getUserName())){
-			throw new InvalidDomainModelException(user, " Missing user name");
+			throw new InvalidDomainModelException(user, "user.name.required");
 		}
 		if(StringUtils.isEmpty(user.getEmail())){
-			throw new InvalidDomainModelException(user, " Missing Email");
+			throw new InvalidDomainModelException(user, "user.email.required");
 		}
 		if(StringUtils.isEmpty(user.getPassword())){
-			throw new InvalidDomainModelException(user, " Missing password");
+			throw new InvalidDomainModelException(user, "user.password.required");
 		}
 	}
 }

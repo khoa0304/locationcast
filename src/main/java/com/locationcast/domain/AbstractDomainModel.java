@@ -20,12 +20,12 @@ public abstract class AbstractDomainModel implements Serializable{
 
     protected Date lastModifiedDate;
 	
-    public static enum AbstractIndexField{
+    public static enum IndexFieldNames{
     	
        id("id");
 	   public String idKey;
 	   
-	   private AbstractIndexField(String idKey) {
+	   private IndexFieldNames(String idKey) {
 		this.idKey = idKey;
 	   }
 	   
