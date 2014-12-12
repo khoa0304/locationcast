@@ -41,19 +41,21 @@ public class CustomResponseEntityExceptionHandler extends AbstractExceptionHandl
     @ResponseStatus(value=HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorMessage handleDuplicatedEntity(DuplicatedDomainModelException e){
-    	
-    	logger.warn(e.toString());
-    	ErrorMessage em = new ErrorMessage(e.toString());
+    	String errorMessage = getResourceBundle().getMessage(e.getMessageKey(), new Object[]{ e.getDomainModel()},Locale.getDefault());
+        	
+    	logger.error(errorMessage);
+    	ErrorMessage em = new ErrorMessage(errorMessage);
     	return em;
     }
     
     @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(value=HttpStatus.CONFLICT)
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorMessage handleIllegalArgumentException(IllegalArgumentException e){
-    	
-    	logger.warn(e.toString());
-    	ErrorMessage em = new ErrorMessage(e.toString());
+    	String errorMessage = getResourceBundle().getMessage(e.getMessage(), null,Locale.getDefault());
+        
+    	logger.error(errorMessage);
+    	ErrorMessage em = new ErrorMessage(errorMessage);
     	return em;
     }
 }

@@ -3,6 +3,10 @@
  */
 package com.locationcast.facade;
 
+import java.util.List;
+
+import com.locationcast.domain.Topic;
+
 
 /**
  * @author Khoa
@@ -10,5 +14,5 @@ package com.locationcast.facade;
  */
 public interface TopicFacade {
 
-
+	 List<Topic> getAllAvailableTopic();
 }

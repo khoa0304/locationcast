@@ -20,7 +20,8 @@
 					 com.locationcast.repository.impl,
 		             com.locationcast.facade.impl,
 		             com.locationcast.factory.impl,
-		             com.locationcast.event" />
+		             com.locationcast.event,
+		             com.locationcast.security.rest" />
 
     <bean id="resourceBundle"
       class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

@@ -20,15 +20,15 @@ public class ConversationValidationImpl implements ConversationValidation {
 	public void validationBasicConversationInfo(Conversation conversation) throws InvalidDomainModelException{
 		
 		if(conversation.getPoster() == null){
-			throw new InvalidDomainModelException(conversation,"Missing Info About the User who posted the conversation");
+			throw new InvalidDomainModelException(conversation,"conversation.poster.missing");
 		}
 		
 		if(conversation.getLongAndLat() == null){
-			throw new InvalidDomainModelException(conversation,"Missing Info About the location where the conversation was created.");
+			throw new InvalidDomainModelException(conversation,"conversation.longitudeAndLatitude.missing");
 		}
 		
 		if(StringUtils.isEmpty(conversation.getContent())){
-			throw new InvalidDomainModelException(conversation," Content should not be emptied");
+			throw new InvalidDomainModelException(conversation,"conversation.content.missing");
 		}
 	}
 }

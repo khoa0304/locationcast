@@ -15,4 +15,6 @@ public interface UserFacade {
 	 boolean createUser(User user) throws InvalidDomainModelException;
 	
 	 User findUserByIndexFields(User user);
+	 
+	 User findUserByUserName(String userName);
 }

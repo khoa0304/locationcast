@@ -66,6 +66,16 @@ public class UserFacadeImpl implements UserFacade {
 		return queriedUser;
 		
 	}
+
+
+	/* (non-Javadoc)
+	 * @see com.locationcast.facade.UserFacade#findUserByUserName(java.lang.String)
+	 */
+	@Override
+	public User findUserByUserName(String userName) {
+		User queriedUser =  userRepository.findUserByUserName(userName,User.FieldNames.USERNAME);
+		return queriedUser;
+	}
 	
   
 }
