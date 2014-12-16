@@ -18,7 +18,9 @@ import com.locationcast.domain.User;
 import com.locationcast.exception.DuplicatedDomainModelException;
 import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.UserFacade;
-import static com.locationcast.util.LocationCastConstant.USER_REST_SERVICE_PATH.USER_SERVICE_PATH;
+import static com.locationcast.util.LocationCastConstant.USER_REST_SERVICE_PATH.*;
+import static com.locationcast.util.LocationCastConstant.*;
+import static com.locationcast.util.i18UserKeysConstant.*;
 /**
  * @author Khoa
  *
@@ -33,14 +35,15 @@ public class UserService {
 	private UserFacade userFacade;
 	
 	
-	@RequestMapping(value="/add",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")
+	@RequestMapping(value=USER_REGISTER_PATH,method = RequestMethod.POST,consumes = APPLICATION_JSON_TYPE,produces = APPLICATION_JSON_TYPE)
 	@ResponseBody
 	@ResponseStatus(value=HttpStatus.CREATED)
 	public User registerUser(@RequestBody User user) throws InvalidDomainModelException,DuplicatedDomainModelException{
 	
 		User queriedUser = userFacade.findUserByIndexFields(user);
+		
 		if(queriedUser != null){
-			throw new DuplicatedDomainModelException(user, "User already exists with the same username");
+			throw new DuplicatedDomainModelException(user, DUPLICATED_USER_KEY);
 		}
 		
 		userFacade.createUser(user);
