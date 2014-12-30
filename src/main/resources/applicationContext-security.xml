@@ -29,12 +29,18 @@
         </session-management>
 -->
          <http-basic/>
+         <!--  <custom-filter ref="corsFilter" before="FIRST"/>  -->
     </http>
 
+    <beans:bean id="corsFilter" class="com.locationcast.security.rest.CorsFilter" />
+    
     <beans:bean id="encoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
-
+ 
+    <beans:bean id="customAuthenticationProvider" class="com.locationcast.security.rest.CustomAuthenticationProvider"/>
+ 
     <authentication-manager>
-        <authentication-provider>
+        <authentication-provider ref="customAuthenticationProvider">
+        <!--  
             <password-encoder ref="encoder"/>
             <user-service>
                 <user name="joe@joe.com"
@@ -47,6 +53,8 @@
                       password="bfb497938c9e40542c3d3cc303ece80ecce59e3f7aef9dfb5e94671edd1e73f03bb5ae7e0b46d50d" 
                       authorities="ROLE_USER" />
             </user-service>
+            
+            -->
         </authentication-provider>
     </authentication-manager>
 
