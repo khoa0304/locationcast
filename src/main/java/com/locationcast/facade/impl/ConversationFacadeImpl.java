@@ -40,11 +40,13 @@ public class ConversationFacadeImpl implements ConversationFacade {
 	
 	public void createConversation(Conversation conversation) throws InvalidDomainModelException{
 		
-		String userPrincipal = securityMgmtService.getCurrentSessionPrincipal().getUsername();
-		
-		User user = userFacade.findUserByUserName(userPrincipal);
-		Poster poster = user.getPoster();
-		conversation.setPoster(poster);
+		if(conversation.getPoster() == null){
+			String userPrincipal = securityMgmtService.getCurrentSessionPrincipal().getUsername();
+			
+			User user = userFacade.findUserByUserName(userPrincipal);
+			Poster poster = user.getPoster();
+			conversation.setPoster(poster);
+		}
 		
 		conversationValidator.validationBasicConversationInfo(conversation);
 		conversationRepos.insertConversation(conversation);

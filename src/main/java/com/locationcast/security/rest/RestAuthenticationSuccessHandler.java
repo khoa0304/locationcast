@@ -15,7 +15,8 @@ import org.springframework.util.StringUtils;
  
 
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private RequestCache requestCache = new HttpSessionRequestCache();
+ 
+	private RequestCache requestCache = new HttpSessionRequestCache();
  
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request,

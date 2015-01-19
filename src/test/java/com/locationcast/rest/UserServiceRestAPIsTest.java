@@ -142,6 +142,7 @@ public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
 		HttpEntity<User> entity = new HttpEntity<User>(getUser(), headers);
 		return entity;
 	}
+	
 	private void dropAndCreateUserCollection(){
 		if(mongoOperation.collectionExists(User.class)){
 			mongoOperation.dropCollection(User.class);
