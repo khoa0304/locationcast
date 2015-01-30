@@ -15,8 +15,11 @@ import org.springframework.stereotype.Service;
 public class SecurityManagementService {
 
 	
-	public User getCurrentSessionPrincipal(){
-		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	public String getCurrentSessionPrincipalName(){
+		
+		String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return principal;
 	}
+	
+	
 }

@@ -7,9 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.index.TextIndexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 /**
  * @author Khoa
  *
@@ -27,6 +24,7 @@ public class Content implements Serializable{
 	
 	private List<byte[]> imageList = new ArrayList<byte[]>();
 
+	public Content(){};
 	/**
 	 * @return the text
 	 */

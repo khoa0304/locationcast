@@ -17,8 +17,12 @@ public class Poster implements Serializable {
 	
 	private long userId ;
 	
+	
+	private String ipAddress;
+	
 	private String aliasUserName = "";
 
+	public Poster() {}
 	/**
 	 * @return the userId
 	 */
@@ -45,6 +49,14 @@ public class Poster implements Serializable {
 	 */
 	public void setAliasUserName(String aliasUserName) {
 		this.aliasUserName = aliasUserName;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
 	

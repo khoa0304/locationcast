@@ -13,9 +13,10 @@
 		<spring-security.version>3.2.5.RELEASE</spring-security.version>
 		<spring.version>4.1.1.RELEASE</spring.version>
 		<spring.data.mongo.version>1.6.1.RELEASE</spring.data.mongo.version>
-		<junit.version>4.9</junit.version>
+		<junit.version>4.12</junit.version>
 		<nosqlunit-version>0.7.6</nosqlunit-version>
 		<jackson.version>1.9.13</jackson.version>
+		<powermock.version>1.6.1</powermock.version>
 	</properties>
 
 	<developers>
@@ -212,6 +213,30 @@
 			<version>3.5.0</version>
 		</dependency>
 
+		<!-- Kafka -->
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.10</artifactId>
+			<version>0.8.2-beta</version>
+		</dependency>
+
+
+		<!-- Avro -->
+
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+
+		<!-- Elastic Search -->
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>0.90.3</version>
+		</dependency>
+
 		<!-- test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -219,6 +244,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
@@ -226,6 +252,26 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.objenesis</groupId>
+			<artifactId>objenesis</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.2</version>
+			<scope>test</scope>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

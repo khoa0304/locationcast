@@ -15,9 +15,11 @@ import com.locationcast.exception.InvalidDomainModelException;
 public interface ConversationFacade {
 
 	
-	void createConversation(Conversation conversation) throws InvalidDomainModelException;
+	void createConversation(String ipAddress,Conversation conversation) throws InvalidDomainModelException;
 	
 	List<Conversation> findConverstaionByContentKeyWords(String[] words);
 	
 	List<Conversation> findConversationsByLongitudeAndLatitude(double[] longitudeAndLatitude);
+	
+	Conversation getEmptyConversation(String ipAddress);
 }

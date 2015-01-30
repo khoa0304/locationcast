@@ -76,6 +76,13 @@ public class UserFacadeImpl implements UserFacade {
 		User queriedUser =  userRepository.findUserByUserName(userName,User.FieldNames.USERNAME);
 		return queriedUser;
 	}
+
+
+	@Override
+	public User getUserSchema() {
+		User user = new User();
+		return user;
+	}
 	
   
 }

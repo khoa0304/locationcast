@@ -1,0 +1,22 @@
+{
+poster: {
+userId: 1422603280769
+aliasUserName: "Mr. Founder"
+},
+content: {
+contentString:"This is my very first conversation from Mr. Founder"
+
+},
+title: "1181 Area",
+tags: [san jose, bayard],
+scope: "PROTECTED",
+longAndLat: ["-121.839370","37.319337"]
+}
+
+
+{
+content: {
+contentString:"This is my very first conversation from Mr. Founder"
+
+}
+}

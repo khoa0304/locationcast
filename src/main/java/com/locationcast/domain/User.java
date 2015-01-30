@@ -40,6 +40,7 @@ public class User extends AbstractDomainModel implements Serializable {
 	private List<Long> conversationPosted = new ArrayList<Long>();
 	
 	private String password = "";
+
 	
 	public static enum FieldNames {
 		
@@ -59,6 +60,7 @@ public class User extends AbstractDomainModel implements Serializable {
 			return fieldName;
 		}
 	}
+	
 	public User(){};
 	
 	public User(String userName,String emailAddress, String password){
@@ -190,7 +192,7 @@ public class User extends AbstractDomainModel implements Serializable {
 	
 	@Override
 	public String toString(){
-		String st = String.format(" Username: %s - Email: %s", userName,email);
+		String st = String.format(" Username: %s - Email: %s - Alias Name: %s", userName,email, aliasName);
 		return st;
 	}
 
@@ -225,12 +227,6 @@ public class User extends AbstractDomainModel implements Serializable {
 		this.aliasName = nickName;
 		return this;
 	}
-	
-	public Poster getPoster(){
-		Poster poster = new Poster();
-		poster.setAliasUserName(this.aliasName);
-		poster.setUserId(this.id);
-		return poster;
-	}
+
 	
 }

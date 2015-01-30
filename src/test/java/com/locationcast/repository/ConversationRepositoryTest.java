@@ -11,6 +11,10 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.easymock.EasyMock;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,7 @@ import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.ConversationFacade;
 import com.locationcast.facade.UserFacade;
 import com.locationcast.test.data.LocationTestData;
+import com.locationcast.util.UserUtil;
 /**
  * @author Khoa
  *
@@ -42,6 +47,9 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 	
 	@Autowired
 	ConversationRepository conversationRepos;
+	
+	
+	HttpServletRequest request;
 	
 	@Before
 	public void initClass(){
@@ -64,6 +72,20 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		indexOp.ensureIndex(textDef);
 	}
 	
+	@Before
+	public void initVariables(){
+		
+       request = EasyMock.createMock(HttpServletRequest.class);
+       EasyMock.expect(request.getRemoteAddr()).andReturn("localhost");
+       EasyMock.replay(request);
+	}
+	
+	@After
+	public void tearDown(){
+		
+		EasyMock.verify(request);
+	
+	}
 	@Test
 	public void testCreateConversation() throws InvalidDomainModelException{
 		
@@ -73,7 +95,7 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		user = user.setUserName(userName).setAliasName(nickName).setEmail(email).setPassword(password);
 		userFacade.createUser(user);
 		
-		Poster poster = user.getPoster();
+		Poster poster = UserUtil.getPoster(user.getAliasName(),user.getId());
 		double[] longitudeAndLatitude = LocationTestData.getHomeLongitudeAndLatitude();
 		
 		Content content = new Content();
@@ -81,7 +103,9 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		
 		Conversation conversation = new Conversation(poster,longitudeAndLatitude);
 		conversation.setContent(content);
-		conversationFacade.createConversation(conversation);
+		
+		
+		conversationFacade.createConversation(request.getRemoteAddr(),conversation);
 		
 		String[] words = {"post","far"};
 		

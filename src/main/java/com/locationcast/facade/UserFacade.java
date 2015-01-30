@@ -17,4 +17,6 @@ public interface UserFacade {
 	 User findUserByIndexFields(User user);
 	 
 	 User findUserByUserName(String userName);
+	 
+	 User getUserSchema();
 }

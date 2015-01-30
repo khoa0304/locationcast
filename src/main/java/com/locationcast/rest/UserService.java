@@ -52,4 +52,16 @@ public class UserService {
 		return user;
 	}
 	
+	@RequestMapping(value=USER_SCHEMA_PATH,method = RequestMethod.GET,produces = APPLICATION_JSON_TYPE)
+	@ResponseBody
+	@ResponseStatus(value=HttpStatus.ACCEPTED)
+	public User getUserSchema() throws InvalidDomainModelException,DuplicatedDomainModelException{
+	
+		User user = userFacade.getUserSchema();
+		
+		logger.info("Return user schema %s",user);
+		
+		return user;
+	}
+	
 }

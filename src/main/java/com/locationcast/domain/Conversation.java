@@ -18,7 +18,7 @@ public class Conversation extends AbstractDomainModel {
 
 	private static final long serialVersionUID = 1L;
 
-	@Field(value="poster")
+	//@Field(value="poster")
 	private Poster poster = null;
 	
     //@Field(value="content")
@@ -32,10 +32,10 @@ public class Conversation extends AbstractDomainModel {
 	
 	private int overAllRatingLevel;
 	
-	@Field(value="comments")
+	//@Field(value="comments")
 	private List<Comment> comments = new ArrayList<Comment>();
 	
-	private long topicId;
+	//private long topicId;
 	
 	private ConversationScope scope = ConversationScope.PROTECTED;
 	
@@ -61,11 +61,17 @@ public class Conversation extends AbstractDomainModel {
 		}
 	}
 	
+	public Conversation(){}
+	
 	public Conversation(Poster poster, double[] longAndLat){
 		this.poster = poster;
 		this.longAndLat = longAndLat;
 	}
 
+	public Conversation(double[] longAndLat){
+		this.longAndLat = longAndLat;
+	}
+	
 	/**
 	 * @return the content
 	 */
@@ -166,20 +172,7 @@ public class Conversation extends AbstractDomainModel {
 		this.comments = comments;
 	}
 
-	/**
-	 * @return the topicId
-	 */
-	public long getTopicId() {
-		return topicId;
-	}
-
-	/**
-	 * @param topicId the topicId to set
-	 */
-	public void setTopicId(long topicId) {
-		this.topicId = topicId;
-	}
-
+	
 	/**
 	 * @return the scope
 	 */
@@ -194,13 +187,7 @@ public class Conversation extends AbstractDomainModel {
 		this.scope = scope;
 	}
 
-	/**
-	 * @return the location
-	 */
-	public Location getLocation() {
-		return new Location(longAndLat);
-	}
-
+	
 	/**
 	
 
