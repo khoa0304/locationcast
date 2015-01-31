@@ -99,7 +99,7 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		double[] longitudeAndLatitude = LocationTestData.getHomeLongitudeAndLatitude();
 		
 		Content content = new Content();
-		content.setText(contentString);
+		content.setContentString(contentString);
 		
 		Conversation conversation = new Conversation(poster,longitudeAndLatitude);
 		conversation.setContent(content);
@@ -112,11 +112,11 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		List<Conversation> list = conversationFacade.findConverstaionByContentKeyWords(words);
 		
 		assertEquals(list.size(), 1);
-		assertEquals(list.get(0).getContent().getText(),contentString);
+		assertEquals(list.get(0).getContent().getContentString(),contentString);
 		
 		List<Conversation> listByGeoQuery = conversationFacade.findConversationsByLongitudeAndLatitude(longitudeAndLatitude);
 		assertEquals(listByGeoQuery.size(), 1);
-		assertEquals(list.get(0).getContent().getText(),contentString);
+		assertEquals(list.get(0).getContent().getContentString(),contentString);
 	}
 	
 	

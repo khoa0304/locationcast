@@ -18,9 +18,6 @@ import kafka.javaapi.message.ByteBufferMessageSet;
 import kafka.message.MessageAndOffset;
  
  
-/**
- * Created by user on 8/4/14.
- */
 public class HelloKafkaConsumer extends  Thread {
 
 	final static String clientId = "SimpleConsumerDemoClient";
@@ -38,7 +35,7 @@ public class HelloKafkaConsumer extends  Thread {
     public HelloKafkaConsumer(){
         Properties properties = new Properties();
         properties.put("zookeeper.connect","localhost:2181");
-        properties.put("group.id","test-group-1");
+        properties.put("group.id","consumer-group-4");
         properties.put("auto.offset.reset", "smallest");
         ConsumerConfig consumerConfig = new ConsumerConfig(properties);
         consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
@@ -47,7 +44,7 @@ public class HelloKafkaConsumer extends  Thread {
     @Override
     public void run() {
     	
-    	Thread.currentThread().setName("1st Consumer");
+    	Thread.currentThread().setName("4th  Consumer");
     	
         Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
         topicCountMap.put(TOPIC, new Integer(1));
@@ -65,12 +62,12 @@ public class HelloKafkaConsumer extends  Thread {
  
     }
  
-    private static void printMessages(ByteBufferMessageSet messageSet) throws UnsupportedEncodingException {
-        for(MessageAndOffset messageAndOffset: messageSet) {
-            ByteBuffer payload = messageAndOffset.message().payload();
-            byte[] bytes = new byte[payload.limit()];
-            payload.get(bytes);
-            System.out.println(new String(bytes, "UTF-8"));
-        }
-    }
+//    private static void printMessages(ByteBufferMessageSet messageSet) throws UnsupportedEncodingException {
+//        for(MessageAndOffset messageAndOffset: messageSet) {
+//            ByteBuffer payload = messageAndOffset.message().payload();
+//            byte[] bytes = new byte[payload.limit()];
+//            payload.get(bytes);
+//            System.out.println(new String(bytes, "UTF-8"));
+//        }
+//    }
 }

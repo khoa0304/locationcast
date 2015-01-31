@@ -14,6 +14,9 @@
     
     <http pattern="index.jsp" security="none"/>
    
+   
+    <http pattern="/static/**" security="none"/>
+   
     <http use-expressions="true" >
         
         <intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')"/>

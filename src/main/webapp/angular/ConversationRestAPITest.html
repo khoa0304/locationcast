@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="conversationApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Testing Conversation Rest API Using AngularJS</title>
+</head>
+<body>
+
+
+<div ng-controller="ConversationCtrl" >
+  <form>
+    <input type="text" id="title" ng-model="myForm.title" ng-minlength="1" ng-maxlength="1200"> Title <br/>
+    
+    <input type="text" id="content" ng-model="myForm.content" ng-minlength="1" ng-maxlength="1200"> Content  <br/>
+
+
+
+    <button ng-click="myForm.submitTheForm()">Submit Conversation</button>
+  </form>
+
+  <div>
+    {{myForm.title}}
+  </div>
+  <div>
+    {{myForm.content}}
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+<script src="js/Authentication.js"></script>
+<script src="js/conversation.js"></script>
+
+
+</body>
+</html>

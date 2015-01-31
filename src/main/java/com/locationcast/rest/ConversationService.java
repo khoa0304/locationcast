@@ -47,7 +47,7 @@ public class ConversationService {
 	
 		conversationFacade.createConversation(ipAddress,conversation);
 		
-		logger.info("Created new conversation %s", conversation);
+		logger.info("Created new conversation %s", conversation.toString());
 	}
 	
 	

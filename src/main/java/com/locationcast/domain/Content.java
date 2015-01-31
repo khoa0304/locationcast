@@ -25,19 +25,7 @@ public class Content implements Serializable{
 	private List<byte[]> imageList = new ArrayList<byte[]>();
 
 	public Content(){};
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return contentString;
-	}
-
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.contentString = text;
-	}
+	
 
 	/**
 	 * @return the hrefLink
@@ -65,5 +53,15 @@ public class Content implements Serializable{
 	 */
 	public void setImageList(List<byte[]> imageList) {
 		this.imageList = imageList;
+	}
+
+
+	public String getContentString() {
+		return contentString;
+	}
+
+
+	public void setContentString(String contentString) {
+		this.contentString = contentString;
 	}
 }
