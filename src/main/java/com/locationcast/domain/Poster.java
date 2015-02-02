@@ -18,7 +18,7 @@ public class Poster implements Serializable {
 	private long userId ;
 	
 	
-	private String ipAddress;
+	private String ipAddress = "";
 	
 	private String aliasUserName = "";
 
@@ -59,6 +59,12 @@ public class Poster implements Serializable {
 		this.ipAddress = ipAddress;
 	}
 
-	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" Alias name ").append(aliasUserName);
+		sb.append(" Ip Address: ").append(ipAddress);
+		return sb.toString();
+	}
 	
 }

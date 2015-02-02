@@ -6,11 +6,13 @@ var conversationApp = angular.module('conversationApp', []);
 
 conversationApp.controller("ConversationCtrl", ['Base64','$scope','$http',function(Base64,$scope, $http) {
 
-			$scope.myForm = {};
-		
+	  
+	        $scope.myForm = {};
 			
 			$scope.myForm.submitTheForm = function(item, event) {
 			
+				
+				
 				console.log("--> Submitting form start");
 				var conversation = {};
 				
@@ -31,12 +33,17 @@ conversationApp.controller("ConversationCtrl", ['Base64','$scope','$http',functi
 				responsePromise.success(function(dataFromServer, status,
 						headers, config) {
 					console.log("--> Submitting form passed.");
+					
+				
+				
 				});
 				responsePromise.error(function(data, status, headers, config) {
 					console.log("--> Submitting form failed.");
 				});
 			};
-
+	
+			
+	
 		} ]);
 
 conversationApp.factory('Base64', function () {

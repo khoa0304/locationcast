@@ -204,5 +204,18 @@ public class Conversation extends AbstractDomainModel {
 	public void setLongAndLat(double[] longAndLat) {
 		this.longAndLat = longAndLat;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(" Longitude : ").append(longAndLat[0]);
+		
+		sb.append(" Latitude : ").append(longAndLat[1]);
+		
+		sb.append(poster.toString());
+		
+		return sb.toString();
+	}
 
 }

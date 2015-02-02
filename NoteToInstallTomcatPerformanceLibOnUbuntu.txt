@@ -1,0 +1,55 @@
+A. Install openssl on ubuntu:
+
+Assuming the current directory is this: cd /home/khoa/lib/apache-tomcat-7.0.57/bin/tomcat-native-1.1.32-src/jni/native
+
+Ubuntu: sudo apt-get install libapr1-dev libssl-dev
+
+
+http://geeksww.com/tutorials/libraries/openssl/installation/installing_openssl_on_ubuntu_linux.php
+
+1. wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz
+
+2. wget http://www.openssl.org/source/openssl-1.0.1g.tar.gz.md5
+
+md5sum openssl-1.0.1g.tar.gz
+
+cat openssl-1.0.1g.tar.gz.md5
+
+tar -xvzf openssl-1.0.1g.tar.gz
+Configuring OpenSSL:
+
+3.  cd /home/khoa/lib/apache-tomcat-7.0.57/bin/tomcat-native-1.1.32-src/jni/native/openssl-1.0.1g
+
+4. sudo ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl -fPIC no-gost no-shared no-zlib
+
+
+// NOTE: to solve this issue /usr/pw/apache/openssl/lib/libssl.a: could not read symbols: Bad value have to include -fPIC no-gost no-shared no-zlib
+// http://impradeep.com/usrpwapacheopensslliblibssl-a-could-not-read-symbols-bad-value/
+
+ 
+ 5. make
+ 
+ 6. make install_sw
+ 
+ 7. Confirm OPENSSL is installed correctly:
+ 
+  /usr/local/openssl/bin/openssl version
+   OpenSSL 1.0.1g 7 Apr 2014
+   
+ // REFERENCE from step 8 to 13:
+ // http://tomcat.apache.org/native-doc/
+ // http://stackoverflow.com/questions/19216979/ssl-configuration-in-tomcat-and-apr
+   
+ 8. cd /home/khoa/lib/apache-tomcat-7.0.57/bin/tomcat-native-1.1.32-src/jni/native
+ 
+ 9. export CATALINA_HOME=/home/khoa/lib/apache-tomcat-7.0.57
+ 
+ 10. sudo ./configure --with-apr=/home/khoa/lib/apache-tomcat-7.0.57/bin/tomcat-native-1.1.32-src/apr-1.5.1 --with-java-home=$JAVA_HOME --with-ssl=/usr/local/openssl --prefix=$CATALINA_HOME
+ 
+ 11. make 
+ 
+ 12. make install
+ 
+ 13. export LD_LIBRARY_PATH=/home/khoa/lib/apache-tomcat-7.0.57/lib:$LD_LIBRARY_PATH
+ 
+ 14. Restart your tomcat, you're all Done!
