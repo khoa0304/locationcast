@@ -19,20 +19,22 @@
    
     <http use-expressions="true" >
         
-        <intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')"/>
+       <!-- -->
+         <intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')"/> 
         <intercept-url pattern="/secure/**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/services/**" access="hasRole('ROLE_USER')"/>
 
-        <form-login login-page="/index.jsp" authentication-failure-url="/index.jsp?fail" default-target-url="/secure/index.html"/>
+     <!-- 
+          <form-login login-page="/index.jsp" authentication-failure-url="/index.jsp?fail" default-target-url="/secure/index.html"/>
         <logout logout-success-url="/index.jsp?loggedout" delete-cookies="JSESSIONID"/>
-  <!--      <remember-me/>
+     <remember-me/>
 
         <session-management invalid-session-url="/index.jsp?invalidSession">
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
         </session-management>
 -->
          <http-basic/>
-         <!--  <custom-filter ref="corsFilter" before="FIRST"/>  -->
+         <!--   <custom-filter ref="corsFilter"/>  -->
     </http>
 
     <beans:bean id="corsFilter" class="com.locationcast.security.rest.CorsFilter" />

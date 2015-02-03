@@ -53,3 +53,18 @@ Configuring OpenSSL:
  13. export LD_LIBRARY_PATH=/home/khoa/lib/apache-tomcat-7.0.57/lib:$LD_LIBRARY_PATH
  
  14. Restart your tomcat, you're all Done!
+ 
+ 
+ 
+ ============== Install NODE.js======================
+ 
+ 
+ $ cd /usr/local/src
+$ wget http://nodejs.org/dist/v0.8.21/node-v0.8.21.tar.gz
+$ tar -xvzf node-v0.8.21.tar.gz
+$ cd node-v0.8.21
+$ ./configure
+$ make
+$ sudo make install
+$ which node
+

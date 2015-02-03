@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
  * @author Khoa
  *
  */
-@Component
+//@Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
  
     @Override
