@@ -1,4 +1,4 @@
-package com.locationcast.kafka.lab;
+package com.locationcast.kafka;
 
 import java.io.IOException;
 
@@ -10,21 +10,24 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JsonEncoder implements Encoder<Object> {
+import com.locationcast.domain.Conversation;
+
+public class ConversationJsonEncoder implements Encoder<Conversation> {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(JsonEncoder.class);
+			.getLogger(ConversationJsonEncoder.class);
 
-	public JsonEncoder(VerifiableProperties verifiableProperties) {}
+	public ConversationJsonEncoder(VerifiableProperties verifiableProperties) {}
 
 	@Override
-	public byte[] toBytes(Object object) {
+	public byte[] toBytes(Conversation object) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			
 			logger.debug("Write JSON object as byte of String {}",object.toString());
-			return objectMapper.writeValueAsString(object).getBytes();
+			byte[] byteArray = objectMapper.writeValueAsString(object).getBytes();
 			
+			return byteArray;
 		} catch (JsonProcessingException e) {
 			logger.error(e.toString());
 		} catch (IOException e) {

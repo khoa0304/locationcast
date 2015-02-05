@@ -23,13 +23,29 @@
 		             com.locationcast.event,
 		             com.locationcast.security.rest" />
 
-    <bean id="resourceBundle"
-      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-      
-	      <property name="basename"><value>classpath:locale/messages/messages</value></property>
-	      <property name="cacheSeconds"><value>-1</value></property>
-	     <property name="defaultEncoding"><value>UTF-8</value></property> 
-     </bean>
+	<bean id="appProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:mongodb.properties</value>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="resourceBundle"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+
+		<property name="basename">
+			<value>classpath:locale/messages/messages</value>
+		</property>
+		<property name="cacheSeconds">
+			<value>-1</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
 
 	<bean id="jacksonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
@@ -41,8 +57,8 @@
 			</list>
 		</property>
 	</bean>
-	<!-- Multipart-Resolver for track uploads -->
 
+	<!-- Multipart-Resolver for track uploads -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="300000" /><!-- Max size 
@@ -55,17 +71,17 @@
 
 	<bean id="locationcastdb" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="locationcast" />
+		<constructor-arg name="databaseName" value="${databaseName}" />
 	</bean>
 
-	<!--  
-	<bean id="testTemplateDB" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="unitTest" />
-	</bean>
-	
-	-->
 
+  <!-- Kafka Service bean -->
 
+  
+
+   <bean id="kafkaServiceProducer" class="com.locationcast.kafka.KafkaServiceProducer"/>
+   
+   <bean id="kafkaConsumerService" class="com.locationcast.kafka.KafkaConsumerService"/>
+		
 
 </beans>

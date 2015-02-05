@@ -1,4 +1,4 @@
-package com.locationcast.kafka.lab;
+package com.locationcast.kafka;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.locationcast.domain.User;
+import com.locationcast.domain.Conversation;
 
-public class JsonDecoder  implements Decoder<Object>{
+public class ConversationJsonDecoder implements Decoder<Conversation>{
 
 	
 	private static final Logger logger = LoggerFactory
-			.getLogger(JsonDecoder.class);
+			.getLogger(ConversationJsonDecoder.class);
 	
 	
 	@Override
-	public Object fromBytes(byte[] arg0) {
+	public Conversation fromBytes(byte[] arg0) {
 		   ObjectMapper objectMapper = new ObjectMapper();
 	        try {
-	        	Object obj = objectMapper.readValue(arg0,User.class);
+	        	Conversation obj = objectMapper.readValue(arg0,Conversation.class);
 	            return obj;
 	        } catch (JsonProcessingException e) {
 	        	logger.error(e.toString());

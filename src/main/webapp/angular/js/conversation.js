@@ -52,7 +52,7 @@ conversationApp
 
 								var responsePromise = $http
 										.post(
-												"http://73.189.181.64:8080/LocationCast/rest/conversation/create",
+												"http://localhost:8080/LocationCast/rest/conversation/create",
 												conversation, {});
 
 								responsePromise

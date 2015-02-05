@@ -14,13 +14,12 @@ import kafka.producer.ProducerConfig;
 import com.locationcast.domain.User;
 
 public class HelloKafkaProducer {
-	final static String TOPIC = "myTopic";
+	final static String TOPIC = "User";
 
 	public static void main(String[] argv) throws InterruptedException {
 
 		Properties properties = new Properties();
 		properties.put("metadata.broker.list", "localhost:9092");
-		// properties.put("serializer.class","kafka.serializer.StringEncoder");
 		properties.put("serializer.class",
 				"com.locationcast.kafka.lab.JsonEncoder");
 
