@@ -5,8 +5,9 @@ package com.locationcast.facade.impl;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.locationcast.domain.Conversation;
@@ -16,7 +17,7 @@ import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.ConversationFacade;
 import com.locationcast.facade.ConversationValidation;
 import com.locationcast.facade.UserFacade;
-import com.locationcast.kafka.KafkaServiceProducer;
+import com.locationcast.kafka.ConversationServiceProducer;
 import com.locationcast.repository.ConversationRepository;
 import com.locationcast.security.rest.SecurityManagementService;
 import com.locationcast.util.UserUtil;
@@ -40,14 +41,14 @@ public class ConversationFacadeImpl implements ConversationFacade {
 	SecurityManagementService securityMgmtService;
 	
 	@Autowired
-	@Qualifier(value="kafkaServiceProducer")
-	KafkaServiceProducer kafkaProducer;
+	ConversationServiceProducer conversationServiceProducer;
 	
+
 	public void createConversation(String ipAddress, Conversation conversation) throws InvalidDomainModelException{
 		
 		setPoster(ipAddress,conversation);
 		conversationValidator.validationBasicConversationInfo(conversation);
-		kafkaProducer.publishConversation(conversation);
+		conversationServiceProducer.publishConversation(conversation);
 	}
 	
 	public List<Conversation> findConverstaionByContentKeyWords(String[] words){
@@ -86,6 +87,9 @@ public class ConversationFacadeImpl implements ConversationFacade {
 			}
 			else{
 				User user = userFacade.findUserByUserName(userPrincipal);
+				if(user == null){
+					 poster = UserUtil.getAnonymousPoster(conversation.getLongAndLat(), ipAddress);
+				}
 				poster = UserUtil.getPoster(user.getAliasName(),user.getId());
 				poster.setIpAddress(ipAddress);
 			}

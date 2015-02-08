@@ -14,14 +14,14 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.locationcast.domain.Conversation;
-
+import static com.locationcast.constant.ConversationServiceConstant.*;
 
 @Service
 @PropertySource("classpath:kafka.properties")
-public class KafkaServiceProducer extends AbstractKafkaConfig{
+public class ConversationServiceProducer extends AbstractKafkaConfig{
 
 	
-	private static final Logger logger = LoggerFactory.getLogger(KafkaServiceProducer.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConversationServiceProducer.class);
 	
 	private kafka.javaapi.producer.Producer<String, Conversation> producer = null;
 	
@@ -44,7 +44,7 @@ public class KafkaServiceProducer extends AbstractKafkaConfig{
 		
 		producer = new kafka.javaapi.producer.Producer<String, Conversation>(producerConfig);
 		
-		logger.info("Finished intializing Kafk producer.");
+		logger.info("Finished intializing Kafka producer.");
 	}
 	
 	@PreDestroy
@@ -54,7 +54,7 @@ public class KafkaServiceProducer extends AbstractKafkaConfig{
 			
 			producer.close();
 			
-			logger.info("Finished closign Kafk producer.");
+			logger.info("Finished closing Kafka producer.");
 		}
 	}
 	

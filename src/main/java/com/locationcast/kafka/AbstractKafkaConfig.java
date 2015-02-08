@@ -19,5 +19,10 @@ public abstract class AbstractKafkaConfig {
 	
 	public static final String KAFKA_ZOOKEEPER_LIST_PROPERTY = "kafka.zookeeper.list";
 	
-	public static final String ConversationTopic = "Conversation";
+	public static final String HOST_NAME = "host.name";
+	
+	public static final String HOST_PORT = "host.port";
+	
+	public static final String APPLICATION_CONTEXT = "application.context"; 
+
 }

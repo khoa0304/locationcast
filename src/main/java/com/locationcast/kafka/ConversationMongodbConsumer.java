@@ -1,16 +1,16 @@
 package com.locationcast.kafka;
 
+import static com.locationcast.constant.ConversationServiceConstant.ConversationTopic;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.Callable;
 
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
-import kafka.javaapi.consumer.ConsumerConnector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,31 +18,32 @@ import org.slf4j.LoggerFactory;
 import com.locationcast.domain.Conversation;
 import com.locationcast.repository.ConversationRepository;
 
-
-public class MongodbConversationServiceConsumer extends AbstractKafkaConfig implements Runnable{
+public class ConversationMongodbConsumer extends AbstractKafkaConsumer implements Runnable{
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(MongodbConversationServiceConsumer.class);
+			.getLogger(ConversationMongodbConsumer.class);
 
-	private ConsumerConnector consumerConnector;
-
+	
 	private ConversationRepository conversationRepos;
 	
-	public MongodbConversationServiceConsumer(ConversationRepository conversationRepository,Properties properties) {
+
+	public ConversationMongodbConsumer(ConversationRepository conversationRepository,Properties properties) {
 		
 		ConsumerConfig consumerConfig = new ConsumerConfig(properties);
+		
 		this.consumerConnector = Consumer
 				.createJavaConsumerConnector(consumerConfig);
 		this.conversationRepos = conversationRepository;
+		
+		Thread.currentThread().setName(getClass().getName());
+		
 		logger.info("Finished initializing {}",getClass().getName());
 	}
 
 
 	@Override
 	public void run() {
-
-		Thread.currentThread().setName(getClass().getName());
-
+	
 		Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
 		topicCountMap.put(ConversationTopic, new Integer(1));
 		Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = this.consumerConnector
@@ -67,10 +68,7 @@ public class MongodbConversationServiceConsumer extends AbstractKafkaConfig impl
 			logger.info("Finished inserting conversation {}", conversation.getContent().getContentString());
 		}
 		
-		logger.info("Returned from consumer connector thread {}",Thread.currentThread().getName());
+		logger.info("Returned from consumer connector thread ");
 	}
 	
-	public ConsumerConnector getConsumerConnector(){
-		return this.consumerConnector;
-	}
 }

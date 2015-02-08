@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator App Using Spring 4 WebSocket</title>
+    <script src="js/sockjs-0.3.4.js"></script>
+    <script src="js/stomp.js"></script>
+    <script type="text/javascript">
+        var stompClient = null; 
+       
+        function connect() {
+            var socket = new SockJS('/LocationCast/rest/conversation/conversationAdd');
+			stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                stompClient.subscribe('/topic/showConversation', function(calResult){
+                	showResult(JSON.parse(calResult.body).content.contentString);
+                
+                });
+            });
+        }
+        
+        function sendNum() {
+         
+            stompClient.send("/LocationCast/rest/conversation/conversationAdd", {},{});
+        }
+        
+        function showResult(message) {
+            var response = document.getElementById('calResponse');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            response.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+<noscript><h2>Enable Java script and reload this page to run Websocket Demo</h2></noscript>
+<h1>Conversation Websocket demo</h1>
+<div>
+   
+     <div>
+        <button id="connect" onclick="connect();">Connect</button>
+         <button id="sendNum" onclick="sendNum();">Send Conversation</button>
+    </div>
+    <div id="calculationDiv">
+        
+        <p id="calResponse"></p>
+    </div>
+</div>
+</body>
+</html> 

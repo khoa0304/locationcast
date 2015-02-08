@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.locationcast.util.LocationCastConstant;
+import com.locationcast.constant.LocationCastConstant;
 
 /**
  * @author Khoa

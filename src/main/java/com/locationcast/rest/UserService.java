@@ -18,8 +18,9 @@ import com.locationcast.domain.User;
 import com.locationcast.exception.DuplicatedDomainModelException;
 import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.UserFacade;
-import static com.locationcast.util.LocationCastConstant.USER_REST_SERVICE_PATH.*;
-import static com.locationcast.util.LocationCastConstant.*;
+
+import static com.locationcast.constant.LocationCastConstant.*;
+import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH.*;
 import static com.locationcast.util.i18UserKeysConstant.*;
 /**
  * @author Khoa

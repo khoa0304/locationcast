@@ -3,11 +3,11 @@
  */
 package com.locationcast.rest;
 
+import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH.*;
 import static com.locationcast.test.data.UserTestData.email;
 import static com.locationcast.test.data.UserTestData.nickName;
 import static com.locationcast.test.data.UserTestData.password;
 import static com.locationcast.test.data.UserTestData.userName;
-import static com.locationcast.util.LocationCastConstant.USER_REST_SERVICE_PATH.USER_REGISTER_PATH;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.locationcast.domain.User;
 import com.locationcast.exception.DuplicatedDomainModelException;
-
+import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH;
 /**
  * @author Khoa
  * 
@@ -97,7 +97,7 @@ public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
 	// System.out.print(user);
 	// }
 	
-	final String fullUrl = getRestURLPrefix() + USER_REGISTER_PATH;
+	final String fullUrl = getRestURLPrefix() + USER_SERVICE_PATH+ USER_REGISTER_PATH;
 	
 	@Test
 	public void testRegisterUser() {
@@ -110,7 +110,7 @@ public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
 			User returnedUser = result.getBody();
 			assertEquals(getUser().getAliasName(), returnedUser.getAliasName());
 		} catch (Exception e) {
-			assertNotNull("Error resgistering new user", e);
+			assertNull("Error resgistering new user", e);
 		}
 	}
 
@@ -144,6 +144,7 @@ public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
 	}
 	
 	private void dropAndCreateUserCollection(){
+		
 		if(mongoOperation.collectionExists(User.class)){
 			mongoOperation.dropCollection(User.class);
 			mongoOperation.createCollection(User.class);
@@ -155,7 +156,7 @@ public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
 		User user = new User();
 		user = user.setUserName(userName).setAliasName(nickName)
 				.setEmail(email).setPassword(password);
-
+		user.setAliasName(nickName);
 		return user;
 	}
 

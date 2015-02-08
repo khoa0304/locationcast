@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
-
+    
 	<mvc:annotation-driven />
 	<context:annotation-config />
 
@@ -21,7 +21,8 @@
 		             com.locationcast.facade.impl,
 		             com.locationcast.factory.impl,
 		             com.locationcast.event,
-		             com.locationcast.security.rest" />
+		             com.locationcast.security.rest,
+		             com.locationcast.websocket" />
 
 	<bean id="appProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -75,13 +76,17 @@
 	</bean>
 
 
-  <!-- Kafka Service bean -->
+  <!-- Kafka Service bean already defined in java
 
-  
+   -->
 
-   <bean id="kafkaServiceProducer" class="com.locationcast.kafka.KafkaServiceProducer"/>
+   <bean id="conversationServiceProducer" class="com.locationcast.kafka.ConversationServiceProducer"/>
    
-   <bean id="kafkaConsumerService" class="com.locationcast.kafka.KafkaConsumerService"/>
-		
+   <bean id="conversationMongodbService" class="com.locationcast.kafka.ConversationMongodbService"/>
+   
+   <bean id="conversationRealtimePublisherService" class="com.locationcast.kafka.ConversationRealtimePublisherService"/>
+  
+  
+  
 
 </beans>

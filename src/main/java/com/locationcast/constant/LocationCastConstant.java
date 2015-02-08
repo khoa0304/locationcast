@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.locationcast.util;
+package com.locationcast.constant;
 
 /**
  * @author Khoa
@@ -31,6 +31,8 @@ public class LocationCastConstant {
 		public static final String CONVERSATION_CREATE_PATH = "/create";
 		
 		public static final String CONVERSATION_SCHEMA_PATH = "/schema";
+		
+		public static final String CONVERSATION_PUBLISH_PATH = "/publish";
 		
 	}
 	
