@@ -19,7 +19,16 @@ public interface ConversationFacade {
 	
 	List<Conversation> findConverstaionByContentKeyWords(String[] words);
 	
-	List<Conversation> findConversationsByLongitudeAndLatitude(double[] longitudeAndLatitude);
+	/**
+	 * Return conversation sorted by the following:
+	 * 1. Distance.
+	 * 2. Time stamp.
+	 * @param longitudeAndLatitude
+	 * @return
+	 */
+	List<Conversation> findConversationsByCoordinates(double[] longitudeAndLatitude);
 	
 	Conversation getEmptyConversation(String ipAddress);
+	
+	
 }

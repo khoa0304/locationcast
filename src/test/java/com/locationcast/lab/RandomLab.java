@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 import org.testng.annotations.Test;
 
-public class RandomTest {
+public class RandomLab {
 
 	@Test
 	public void testLongitudeDecimalIncrement() {

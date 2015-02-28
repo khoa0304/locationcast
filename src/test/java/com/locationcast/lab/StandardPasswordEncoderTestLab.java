@@ -4,7 +4,7 @@ package com.locationcast.lab;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.testng.annotations.Test;
 
-public class StandardPasswordEncoderTest {
+public class StandardPasswordEncoderTestLab {
 
     @Test
     public void encodeTest() {

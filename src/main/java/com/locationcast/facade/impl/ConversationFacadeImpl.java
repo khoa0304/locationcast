@@ -5,8 +5,6 @@ package com.locationcast.facade.impl;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +59,7 @@ public class ConversationFacadeImpl implements ConversationFacade {
 		return conversationList;
 	}
 	
-	public List<Conversation> findConversationsByLongitudeAndLatitude(double[] longitudeAndLatitude){
+	public List<Conversation> findConversationsByCoordinates(double[] longitudeAndLatitude){
 		
 		return conversationRepos.findConversationByLongitudeAndLatitude(longitudeAndLatitude);
 	}
@@ -78,8 +76,8 @@ public class ConversationFacadeImpl implements ConversationFacade {
 	
 	private Poster setPoster(String ipAddress, Conversation conversation){
 	
-		Poster poster = null;
-		if(conversation.getPoster() == null){
+		Poster poster = conversation.getPoster();
+		if(poster == null){
 			String userPrincipal = securityMgmtService.getCurrentSessionPrincipalName();
 			
 			if(userPrincipal == null){
@@ -91,11 +89,12 @@ public class ConversationFacadeImpl implements ConversationFacade {
 					 poster = UserUtil.getAnonymousPoster(conversation.getLongAndLat(), ipAddress);
 				}
 				poster = UserUtil.getPoster(user.getAliasName(),user.getId());
-				poster.setIpAddress(ipAddress);
 			}
 			conversation.setPoster(poster);
 		}
 		
+		poster.setIpAddress(ipAddress);
 		return poster;
 	}
+
 }

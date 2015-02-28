@@ -2,7 +2,6 @@ package com.locationcast.repository;
 
 import static org.testng.Assert.assertEquals;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,33 +16,36 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.locationcast.domain.Location;
+import com.locationcast.test.data.LocationTestData;
 
-
-public class LocationRepositoryTest extends AbstractMongoDBReposTest{
+public class LocationRepositoryTest extends AbstractMongoDBReposTest {
 
 	// @Rule
 	// public MongoDbRule mongoDbRule =
 	// newMongoDbRule().defaultSpringMongoDb("demo-test");
 
 	// nosql-unit requirement
-	
+
+	static double startingLatitude = 37.319337; // 37.999999
+	// 37.319337,-121.839370
+	static double startingLongitude = -121.839370; // -121.800000 to
+	// -122.8000000
+	static double DecrementFactor = -0.000001;
+	static double IncrementFactor = 0.000001;
 
 	public static final Double KILOMETER_PER_DEGREE = 111.0d;
 
 	public static final Double MILE_PER_DEGREE = 69.0d;
 
 	public static final String collectionName = Location.class.getSimpleName();
+
 	@BeforeClass
 	public static void init() {
 
-		
+		// mongoOperation.createCollection(Location.class);
 
-    	
-//		mongoOperation.createCollection(Location.class);
-		
-		
 		mongoOperation.dropCollection(collectionName);
-		
+
 		DefaultIndexOperations indexOp = new DefaultIndexOperations(
 				mongoOperation, collectionName);
 		indexOp.dropAllIndexes();
@@ -52,7 +54,8 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 		geoIndex.typed(GeoSpatialIndexType.GEO_2D);
 		indexOp.ensureIndex(geoIndex);
 
-		double[][] longLatArray = getLongitudeLatitudeDataset(IncrementFactor);
+		double[][] longLatArray = LocationTestData
+				.getLongitudeLatitudeDataset(1000,IncrementFactor);
 		List<Location> longLatArrayLits = new ArrayList<Location>(
 				longLatArray.length);
 		int i = 1;
@@ -65,9 +68,10 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 			Location location = new Location(i, coordiate);
 			longLatArrayLits.add(location);
 		}
-		mongoOperation.insert(longLatArrayLits,collectionName);
+		mongoOperation.insert(longLatArrayLits, collectionName);
 
-		longLatArray = getLongitudeLatitudeDataset(DecrementFactor);
+		longLatArray = LocationTestData
+				.getLongitudeLatitudeDataset(1000,DecrementFactor);
 		longLatArrayLits = new ArrayList<Location>(longLatArray.length);
 
 		length = longLatArray.length;
@@ -80,78 +84,43 @@ public class LocationRepositoryTest extends AbstractMongoDBReposTest{
 			Location location = new Location(i, coordiate);
 			longLatArrayLits.add(location);
 		}
-		mongoOperation.insert(longLatArrayLits,collectionName);
-
+		mongoOperation.insert(longLatArrayLits, collectionName);
 
 	}
 
 	@AfterClass
-	public static void tearDown(){
+	public static void tearDown() {
 		mongoOperation.dropCollection(collectionName);
 	}
 
 	@Test
 	public void testQueryForMaxDistanceInMile() {
 
-		Criteria criteria = new Criteria(Location.AttributeNames.longAndLat.getName()).near(
+		Criteria criteria = new Criteria(
+				Location.AttributeNames.longAndLat.getName()).near(
 				new Point(startingLongitude, startingLatitude)).maxDistance(
 				getInMile(0.00001));
 		Query query = new Query(criteria);
-		
-		List<Location> locationList = mongoOperation
-				.find(query, Location.class,collectionName);
+
+		List<Location> locationList = mongoOperation.find(query,
+				Location.class, collectionName);
 		System.out.println("Total location : " + locationList.size());
 		for (Location location : locationList) {
 			System.out.println(location);
 		}
-		
+
 		assertEquals(2, locationList.size());
 	}
 
-	
 	@Test
-	public void testLocationAndTopicQueries(){
-		
-		
+	public void testLocationAndTopicQueries() {
+
 	}
-	
-	
+
 	private Double getInMile(Double maxdistance) {
 		return maxdistance / MILE_PER_DEGREE;
 	}
 
-	static double startingLatitude = 37.319337; // 37.999999
-												// 37.319337,-121.839370
-	static double startingLongitude = -121.839370; // -121.800000 to
-													// -122.8000000
-	static double DecrementFactor = -0.000001;
-	static double IncrementFactor = 0.000001;
-
-	static int numberOfCoordinate = 10000;
-
-	final static DecimalFormat form = new DecimalFormat("#.######");
-
 	// 37.300000 37.5
 
-	public static double[][] getLongitudeLatitudeDataset(double fraction) {
-		double startingLatitude = 37.319337;
-		double startingLongitude = -121.839370;
-
-		double[][] longitutudeAndLatitudeArray = new double[numberOfCoordinate][];
-
-		for (int i = 0; i < numberOfCoordinate; i++) {
-
-			double[] coordinate = { startingLongitude, startingLatitude };
-
-			startingLongitude = Double.valueOf(form.format(startingLongitude
-					+ fraction));
-			startingLatitude = Double.valueOf(form.format(startingLatitude
-					+ fraction));
-
-			longitutudeAndLatitudeArray[i] = coordinate;
-
-		}
-
-		return longitutudeAndLatitudeArray;
-	}
 }

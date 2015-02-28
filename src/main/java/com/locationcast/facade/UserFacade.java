@@ -12,7 +12,7 @@ import com.locationcast.exception.InvalidDomainModelException;
  */
 public interface UserFacade {
 
-	 boolean createUser(User user) throws InvalidDomainModelException;
+	 User registerUser(User user) throws InvalidDomainModelException;
 	
 	 User findUserByIndexFields(User user);
 	 

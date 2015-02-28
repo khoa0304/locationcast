@@ -74,19 +74,18 @@
 		<constructor-arg ref="mongo" />
 		<constructor-arg name="databaseName" value="${databaseName}" />
 	</bean>
+  
+  
+  
+  <!-- Kafka Service bean already defined in java-->
 
-
-  <!-- Kafka Service bean already defined in java
-
-   -->
+   
 
    <bean id="conversationServiceProducer" class="com.locationcast.kafka.ConversationServiceProducer"/>
    
    <bean id="conversationMongodbService" class="com.locationcast.kafka.ConversationMongodbService"/>
    
    <bean id="conversationRealtimePublisherService" class="com.locationcast.kafka.ConversationRealtimePublisherService"/>
-  
-  
   
 
 </beans>

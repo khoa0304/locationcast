@@ -40,7 +40,7 @@ public class UserRepositoryTest extends AbstractMongoDBReposTest {
 	public void testInsertAndQueryNewUser() throws InvalidDomainModelException{
 		User user = new User();
 		user = user.setUserName(userName).setAliasName(nickName).setEmail(email).setPassword(password);
-		userFacade.createUser(user);
+		userFacade.registerUser(user);
 		User queriedUser = userFacade.findUserByIndexFields(user);
 		assertNotNull(queriedUser.getId());
 		assertEquals(user.getAliasName(),nickName);

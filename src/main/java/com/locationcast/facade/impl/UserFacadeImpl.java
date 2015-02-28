@@ -32,13 +32,20 @@ public class UserFacadeImpl implements UserFacade {
 	UserValidation userValidation;
 	
 
-	public boolean createUser(User user) throws InvalidDomainModelException{
+	public User registerUser(User user) throws InvalidDomainModelException{
 		
 		userValidation.validateBasicUserRegistrationInfo(user);
 		
+        User queriedUser = findUserByIndexFields(user);
+		
+		if(queriedUser != null){
+		  return queriedUser;
+		}
+		
+		
 		userRepository.insertUser(user);
 		
-		return true;
+		return user;
 	}
 	
 	

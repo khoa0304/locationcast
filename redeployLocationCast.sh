@@ -18,4 +18,4 @@ cd "/home/khoa/lib/apache-tomcat-7.0.57/bin"
 ./catalina.sh jpda start
 sleep 3
 cd "/home/khoa/git/locationcast"
-mvn clean tomcat7:redeploy
+mvn clean -Dmaven.test.skip=true tomcat7:redeploy

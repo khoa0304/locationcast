@@ -1,0 +1,17 @@
+Welcome to Elasticsearch Server Second Edition. In the second edition of the book,
+we decided not only to do the update to match the latest version of Elasticsearch but
+also to add some additional important sections that we didn't think of while writing
+the first book. While reading this book, you will be taken on a journey through
+a wonderful world of full-text search provided by the Elasticsearch server. We will
+start with a general introduction to Elasticsearch, which covers how to start and run
+Elasticsearch, what are the basic concepts of Elasticsearch, and how to index and
+search your data in the most basic way.
+This book will also discuss the query language, so-called Querydsl, that allows
+you to create complicated queries and filter the returned results. In addition to all
+this, you'll see how you can use faceting to calculate aggregated data based on the
+results returned by your queries, and how to use the newly introduced aggregation
+framework (the analytics engine allows you to give meaning to your data). We will
+implement autocomplete functionality together and learn how to use Elasticsearch
+spatial capabilities and prospective search.
+Finally, this book will show you Elasticsearch administration API capabilities
+with features such as shard placement control and cluster handling.

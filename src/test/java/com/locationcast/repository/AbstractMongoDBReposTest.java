@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.locationcast.mongodb.config.MongoConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath*:applicationContext.xml"})
+@ContextConfiguration(locations={"classpath*:META-INF/spring/context/applicationContext-test.xml"})
 public abstract class AbstractMongoDBReposTest {
 
 	protected static ApplicationContext applicationContext;

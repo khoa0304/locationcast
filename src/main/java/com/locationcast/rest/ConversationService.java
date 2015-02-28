@@ -3,6 +3,9 @@
  */
 package com.locationcast.rest;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.locationcast.domain.Content;
 import com.locationcast.domain.Conversation;
@@ -96,4 +101,25 @@ public class ConversationService {
 		
 	}
 	
+	
+	@RequestMapping(value = "/image", method = RequestMethod.POST)
+	public @ResponseBody String handleFileUpload(MultipartFile file) {
+		
+		String name = "test";
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(new File(name)));
+				stream.write(bytes);
+				stream.close();
+				return "You successfully uploaded " + name + "!";
+			} catch (Exception e) {
+				return "You failed to upload " + name + " => " + e.getMessage();
+			}
+		} else {
+			return "You failed to upload " + name
+					+ " because the file was empty.";
+		}
+	}
 }

@@ -9,7 +9,14 @@ import static com.locationcast.test.data.UserTestData.password;
 import static com.locationcast.test.data.UserTestData.userName;
 import static org.testng.Assert.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -87,13 +94,13 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 	
 	}
 	@Test
-	public void testCreateConversation() throws InvalidDomainModelException{
+	public void testCreateConversation() throws InvalidDomainModelException, InterruptedException{
 		
 		final String contentString = "This is my first post. I hope it will go far 12-08-2014!!!!";
 		
 		User user = new User();
 		user = user.setUserName(userName).setAliasName(nickName).setEmail(email).setPassword(password);
-		userFacade.createUser(user);
+		userFacade.registerUser(user);
 		
 		Poster poster = UserUtil.getPoster(user.getAliasName(),user.getId());
 		double[] longitudeAndLatitude = LocationTestData.getHomeLongitudeAndLatitude();
@@ -107,6 +114,9 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		
 		conversationFacade.createConversation(request.getRemoteAddr(),conversation);
 		
+		TimeUnit.SECONDS.sleep(2);
+		
+		
 		String[] words = {"post","far"};
 		
 		List<Conversation> list = conversationFacade.findConverstaionByContentKeyWords(words);
@@ -114,11 +124,34 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		assertEquals(list.size(), 1);
 		assertEquals(list.get(0).getContent().getContentString(),contentString);
 		
-		List<Conversation> listByGeoQuery = conversationFacade.findConversationsByLongitudeAndLatitude(longitudeAndLatitude);
+		List<Conversation> listByGeoQuery = conversationFacade.findConversationsByCoordinates(longitudeAndLatitude);
 		assertEquals(listByGeoQuery.size(), 1);
 		assertEquals(list.get(0).getContent().getContentString(),contentString);
 	}
 	
 	
+//	//@Test
+//	public void testQueryConversationByCoordinates() throws InvalidDomainModelException, IOException{
+//		
+//		double[][] coordinatesDataSet = LocationTestData.getLongitudeLatitudeDataset(100,0.001);
+//		
+//		File file = new File("SampleText.txt");
+//		
+//		FileInputStream fstream = new FileInputStream(file);
+//		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+//		String strLine;
+//	    int i = 0;
+//		while ((strLine = br.readLine()) != null)   {
+//	
+//			Content content = new Content();
+//			content.setContentString(strLine);
+//			
+//			Conversation conversation = new Conversation(coordinatesDataSet[i++]);
+//			conversation.setContent(content);
+//			
+//			
+//			conversationFacade.createConversation(request.getRemoteAddr(),conversation);
+//		}
+//	}
 	
 }

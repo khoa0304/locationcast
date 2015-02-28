@@ -92,7 +92,7 @@ public class ConversationRepositoryImpl extends AbstractRepository<Conversation>
     	
     	final Criteria criteria = new Criteria(Conversation.FieldNames.LongAndLat.getFieldName()).near(
 				new Point(longitudeAndLatitude[0], longitudeAndLatitude[1])).maxDistance(
-				GeoLocationConstant.getInMile(GeoLocationConstant.defaultMinConversationDistance));
+				GeoLocationConstant.getInMile(GeoLocationConstant.defaultMaxConversationDistance));
 	
     	Query query = new Query(criteria);
 		

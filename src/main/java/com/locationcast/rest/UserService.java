@@ -3,6 +3,11 @@
  */
 package com.locationcast.rest;
 
+import static com.locationcast.constant.LocationCastConstant.APPLICATION_JSON_TYPE;
+import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH.USER_REGISTER_PATH;
+import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH.USER_SCHEMA_PATH;
+import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH.USER_SERVICE_PATH;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +23,6 @@ import com.locationcast.domain.User;
 import com.locationcast.exception.DuplicatedDomainModelException;
 import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.UserFacade;
-
-import static com.locationcast.constant.LocationCastConstant.*;
-import static com.locationcast.constant.LocationCastConstant.USER_REST_SERVICE_PATH.*;
-import static com.locationcast.util.i18UserKeysConstant.*;
 /**
  * @author Khoa
  *
@@ -41,16 +42,11 @@ public class UserService {
 	@ResponseStatus(value=HttpStatus.CREATED)
 	public User registerUser(@RequestBody User user) throws InvalidDomainModelException,DuplicatedDomainModelException{
 	
-		User queriedUser = userFacade.findUserByIndexFields(user);
 		
-		if(queriedUser != null){
-			throw new DuplicatedDomainModelException(user, DUPLICATED_USER_KEY);
-		}
+		User registeredUsers = userFacade.registerUser(user);
+		logger.info("Finished adding user %s",registeredUsers);
 		
-		userFacade.createUser(user);
-		logger.info("Finished adding user %s",user);
-		
-		return user;
+		return registeredUsers;
 	}
 	
 	@RequestMapping(value=USER_SCHEMA_PATH,method = RequestMethod.GET,produces = APPLICATION_JSON_TYPE)

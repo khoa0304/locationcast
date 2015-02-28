@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/data/mongo
+    http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+    
+	<mvc:annotation-driven />
+	<context:annotation-config />
+
+	<context:component-scan
+		base-package="com.locationcast.rest,
+					 com.locationcast.repository.impl,
+		             com.locationcast.facade.impl,
+		             com.locationcast.factory.impl,
+		             com.locationcast.event,
+		             com.locationcast.security.rest,
+		             com.locationcast.websocket" />
+
+	<bean id="appProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:mongodb.properties</value>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="resourceBundle"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+
+		<property name="basename">
+			<value>classpath:locale/messages/messages</value>
+		</property>
+		<property name="cacheSeconds">
+			<value>-1</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+
+	<bean id="jacksonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jacksonMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Multipart-Resolver for track uploads -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="300000" /><!-- Max size 
+			in bytes. -->
+	</bean>
+
+	<!-- MongoDB Config -->
+
+	<mongo:mongo id="mongo" /> <!-- defaults: host="127.0.0.1" port="27017" -->
+
+	<bean id="locationcastdb" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="${databaseName}" />
+	</bean>
+
+
+  <!-- Kafka Service bean already defined in java-->
+
+   
+
+   <bean id="conversationServiceProducer" class="com.locationcast.kafka.ConversationServiceProducer"/>
+   
+   <bean id="conversationMongodbService" class="com.locationcast.kafka.ConversationMongodbService"/>
+   
+   <bean id="conversationRealtimePublisherService" class="com.locationcast.kafka.ConversationRealtimePublisherService"/>
+  
+  
+  
+
+</beans>

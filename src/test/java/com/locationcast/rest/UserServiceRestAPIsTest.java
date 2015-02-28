@@ -121,12 +121,15 @@ public class UserServiceRestAPIsTest extends AbstractRestServiceTest {
 		HttpClientErrorException e = null;
 		try {
 			ResponseEntity<User> result = restTemplate.exchange(fullUrl,HttpMethod.POST, entity, User.class);
-		    assertFalse("Should not reach here. Expect DuplicatedDomainModelException.",true);
+		    //expect same user returned
+			assertNotNull(result.getBody());
+			//assertFalse("Should not reach here. Expect DuplicatedDomainModelException.",true);
 		} catch (HttpClientErrorException e1) {
 			e = e1;
+			System.out.println( e.getResponseBodyAsString());
+			assertNotNull("Expected DuplicatedDomainModelException when resgistering duplicated user", e.getResponseBodyAsString());
 		}
-		System.out.println( e.getResponseBodyAsString());
-		assertNotNull("Expected DuplicatedDomainModelException when resgistering duplicated user", e.getResponseBodyAsString());
+		
 	}
 	
 	protected HttpEntity<User> getHttpEntityUser(){
