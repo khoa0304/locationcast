@@ -26,7 +26,7 @@ public interface ConversationFacade {
 	 * @param longitudeAndLatitude
 	 * @return
 	 */
-	List<Conversation> findConversationsByCoordinates(double[] longitudeAndLatitude);
+	List<Conversation> findConversationsByCoordinates(double[] longitudeAndLatitude,double proximity);
 	
 	Conversation getEmptyConversation(String ipAddress);
 	

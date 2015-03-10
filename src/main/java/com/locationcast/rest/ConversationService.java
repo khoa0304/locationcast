@@ -3,10 +3,20 @@
  */
 package com.locationcast.rest;
 
+import static com.locationcast.constant.ConversationServiceConstant.CONVERSATION_TOPIC;
+import static com.locationcast.constant.LocationCastConstant.APPLICATION_JSON_TYPE;
+import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_CREATE_PATH;
+import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_PUBLISH_PATH;
+import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_LOAD_PATH;
+import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_SCHEMA_PATH;
+import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_SERVICE_PATH;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,26 +26,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.locationcast.domain.Content;
 import com.locationcast.domain.Conversation;
+import com.locationcast.domain.Location;
 import com.locationcast.exception.DuplicatedDomainModelException;
 import com.locationcast.exception.InvalidDomainModelException;
 import com.locationcast.facade.ConversationFacade;
-
-import static com.locationcast.constant.ConversationServiceConstant.*;
-import static com.locationcast.constant.LocationCastConstant.APPLICATION_JSON_TYPE;
-import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_CREATE_PATH;
-import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_PUBLISH_PATH;
-import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_SCHEMA_PATH;
-import static com.locationcast.constant.LocationCastConstant.CONVERSATION_REST_SERVICE_PATH.CONVERSATION_SERVICE_PATH;
 /**
  * @author Khoa
  *
@@ -69,6 +73,40 @@ public class ConversationService {
 		return conversation;
 	}
 	
+	@RequestMapping(value=CONVERSATION_LOAD_PATH,method = RequestMethod.GET,produces = APPLICATION_JSON_TYPE)
+	@ResponseStatus(value=HttpStatus.OK)
+	@ResponseBody
+	public List<Conversation> getConversation(@PathVariable String longitude, @PathVariable String latitude, @PathVariable double proximity)throws IllegalArgumentException{
+	
+		logger.info("Get conversation within location Longitude {} -  Latitude {}", longitude,latitude);
+	
+		try{
+			double[] location =  {Double.parseDouble(longitude),Double.parseDouble(latitude)};
+			
+			List<Conversation> convesrationList = conversationFacade.findConversationsByCoordinates(location,proximity);
+			
+			logger.info("Found {} conversations.", convesrationList.size());
+			
+			return convesrationList;
+			
+		}
+		catch(NumberFormatException | NullPointerException e){
+			throw new IllegalArgumentException("conversation.invalid.longitudeLatitude",e);
+		}
+		
+	
+	}
+	
+	
+	@RequestMapping(value="/location",method = RequestMethod.GET,produces = APPLICATION_JSON_TYPE)
+	@ResponseStatus(value=HttpStatus.OK)
+	@ResponseBody
+	public Location getLocation(){
+	
+		Location location = new Location(new double[]{-128.123,33.321});
+		return location;
+	}
+	
 	
 	@RequestMapping(value=CONVERSATION_SCHEMA_PATH,method = RequestMethod.GET, produces = APPLICATION_JSON_TYPE)
 	@ResponseBody
@@ -100,6 +138,7 @@ public class ConversationService {
 		logger.info("Finished publishing conversation {}", conversation);
 		
 	}
+	
 	
 	
 	@RequestMapping(value = "/image", method = RequestMethod.POST)

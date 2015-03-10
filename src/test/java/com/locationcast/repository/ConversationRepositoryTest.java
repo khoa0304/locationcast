@@ -10,10 +10,8 @@ import static com.locationcast.test.data.UserTestData.userName;
 import static org.testng.Assert.assertEquals;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -83,7 +81,7 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 	public void initVariables(){
 		
        request = EasyMock.createMock(HttpServletRequest.class);
-       EasyMock.expect(request.getRemoteAddr()).andReturn("localhost");
+       EasyMock.expect(request.getRemoteAddr()).andReturn("localhost").anyTimes();
        EasyMock.replay(request);
 	}
 	
@@ -124,34 +122,65 @@ public class ConversationRepositoryTest  extends AbstractMongoDBReposTest {
 		assertEquals(list.size(), 1);
 		assertEquals(list.get(0).getContent().getContentString(),contentString);
 		
-		List<Conversation> listByGeoQuery = conversationFacade.findConversationsByCoordinates(longitudeAndLatitude);
+		List<Conversation> listByGeoQuery = conversationFacade.findConversationsByCoordinates(longitudeAndLatitude,1.0d);
 		assertEquals(listByGeoQuery.size(), 1);
 		assertEquals(list.get(0).getContent().getContentString(),contentString);
 	}
 	
 	
-//	//@Test
-//	public void testQueryConversationByCoordinates() throws InvalidDomainModelException, IOException{
-//		
-//		double[][] coordinatesDataSet = LocationTestData.getLongitudeLatitudeDataset(100,0.001);
-//		
-//		File file = new File("SampleText.txt");
-//		
-//		FileInputStream fstream = new FileInputStream(file);
-//		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-//		String strLine;
-//	    int i = 0;
-//		while ((strLine = br.readLine()) != null)   {
-//	
-//			Content content = new Content();
-//			content.setContentString(strLine);
-//			
-//			Conversation conversation = new Conversation(coordinatesDataSet[i++]);
-//			conversation.setContent(content);
-//			
-//			
-//			conversationFacade.createConversation(request.getRemoteAddr(),conversation);
-//		}
-//	}
+	@Test
+	public void testQueryConversationByCoordinates() throws InvalidDomainModelException, IOException{
+		
+		int totalLineFromSampleText = 17;///text/SampleText.txt
+		
+		double[][] coordinatesDataSet = LocationTestData.getLongitudeLatitudeDataset(totalLineFromSampleText,0.001);
+		
+		int totalConversation = createCoversation("/text/SampleText.txt",coordinatesDataSet);
+		
+		assertEquals(totalConversation, totalLineFromSampleText);
+		
+		int counter = 0;
+		for(double[] longAndLat : coordinatesDataSet){
+			
+			counter ++;
+			
+			List<Conversation> list =  conversationRepos.findConversationByLongitudeAndLatitude(longAndLat,328.0d);
+		
+		    int size = list.size();
+		    System.out.println("\n\n=============================\n\n");
+		    String format = String.format(" Longitude %f  - Lat %f - counter %d - size %d ", new Object[]{longAndLat[0],longAndLat[1],counter,size});
+		    System.out.println(format);
+	
+		    for(Conversation conversation : list ){
+		    	double[] location = conversation.getLongAndLat();
+		    	String format2 = String.format(" Long %f - Lat %f", location[0],location[1]);
+		        System.out.println(">>>> " +format2);
+		    }
+		    
+		    System.out.println("\n\n=============================\n\n");
+		    
+		}
+	}
+	
+	private int createCoversation(String fileLocation, double[][] coordinatesDataSet) throws InvalidDomainModelException, IOException{
+
+		InputStream is = this.getClass().getResourceAsStream(fileLocation);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		String strLine;
+	    int i = 0;
+		while ((strLine = br.readLine()) != null)   {
+	
+			Content content = new Content();
+			content.setContentString(strLine);
+			
+			Conversation conversation = new Conversation(coordinatesDataSet[i++]);
+			conversation.setContent(content);
+			
+			
+			conversationFacade.createConversation(request.getRemoteAddr(),conversation);
+		}
+		return i;
+	}
 	
 }

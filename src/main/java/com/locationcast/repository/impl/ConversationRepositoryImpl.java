@@ -88,11 +88,11 @@ public class ConversationRepositoryImpl extends AbstractRepository<Conversation>
     	return conversationList;
     }
 	
-    public List<Conversation> findConversationByLongitudeAndLatitude(double[] longitudeAndLatitude){
+    public List<Conversation> findConversationByLongitudeAndLatitude(double[] longitudeAndLatitude, double proximity){
     	
     	final Criteria criteria = new Criteria(Conversation.FieldNames.LongAndLat.getFieldName()).near(
-				new Point(longitudeAndLatitude[0], longitudeAndLatitude[1])).maxDistance(
-				GeoLocationConstant.getInMile(GeoLocationConstant.defaultMaxConversationDistance));
+				new Point(longitudeAndLatitude[0], longitudeAndLatitude[1])).
+				maxDistance(GeoLocationConstant.getFeet(proximity));
 	
     	Query query = new Query(criteria);
 		

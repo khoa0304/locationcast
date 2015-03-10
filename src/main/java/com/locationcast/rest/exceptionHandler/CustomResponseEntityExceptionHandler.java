@@ -52,7 +52,7 @@ public class CustomResponseEntityExceptionHandler extends AbstractExceptionHandl
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorMessage handleIllegalArgumentException(IllegalArgumentException e){
-    	String errorMessage = getResourceBundle().getMessage(e.getMessage(), null,Locale.getDefault());
+    	String errorMessage = getResourceBundle().getMessage(e.getMessage(), new Object[]{ e.getCause().getLocalizedMessage()},Locale.getDefault());
         
     	logger.error(errorMessage);
     	ErrorMessage em = new ErrorMessage(errorMessage);

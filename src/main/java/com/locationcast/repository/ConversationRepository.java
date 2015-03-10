@@ -17,6 +17,6 @@ public interface ConversationRepository {
 	
 	List<Conversation> findConverstaionByContentKeyWords(String[] words);
 	
-	List<Conversation> findConversationByLongitudeAndLatitude(double[] longitudeAndLatitude);
+	List<Conversation> findConversationByLongitudeAndLatitude(double[] longitudeAndLatitude, double proximity);
 
 }

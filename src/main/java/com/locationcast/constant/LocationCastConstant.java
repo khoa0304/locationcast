@@ -28,6 +28,8 @@ public class LocationCastConstant {
 		
 		public static final String CONVERSATION_SERVICE_PATH = "/rest/conversation";
 		
+		public static final String CONVERSATION_LOAD_PATH = "/load/{longitude}/{latitude}/{proximity}/";
+		
 		public static final String CONVERSATION_CREATE_PATH = "/create";
 		
 		public static final String CONVERSATION_SCHEMA_PATH = "/schema";

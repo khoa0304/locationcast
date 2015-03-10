@@ -59,9 +59,9 @@ public class ConversationFacadeImpl implements ConversationFacade {
 		return conversationList;
 	}
 	
-	public List<Conversation> findConversationsByCoordinates(double[] longitudeAndLatitude){
+	public List<Conversation> findConversationsByCoordinates(double[] longitudeAndLatitude, double proximity){
 		
-		return conversationRepos.findConversationByLongitudeAndLatitude(longitudeAndLatitude);
+		return conversationRepos.findConversationByLongitudeAndLatitude(longitudeAndLatitude,proximity);
 	}
 
 	@Override

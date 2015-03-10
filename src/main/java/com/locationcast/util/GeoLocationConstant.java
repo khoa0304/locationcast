@@ -25,15 +25,15 @@ public class GeoLocationConstant {
 		8        0.00000001 1.11 mm
 		
 		
-		Decimal Places   Aprox. Distance    Say What?
-		1                10 kilometers      6.2 miles
-		2                1 kilometer        0.62 miles
-		3                100 meters         About 328 feet
-		4                10 meters          About 33 feet
-		5                1 meter            About 3 feet
-		6                10 centimeters     About 4 inches
-		7                1.0 centimeter     About ½ an inch
-		8                1.0 millimeter     The width of paperclip wire.
+		Decimal Places	   Aprox. Distance    Say What?
+		1               	10 kilometers      6.2 miles
+		2                	1 kilometer        0.62 miles
+		3      0.001        100 meters         About 328 feet
+		4                	10 meters          About 33 feet
+		5                	1 meter            About 3 feet
+		6                	10 centimeters     About 4 inches
+		7                	1.0 centimeter     About ½ an inch
+		8      0.00000001  	1.0 millimeter     The width of paperclip wire.
 	 */
 	
 	public static final Double KILOMETER_PER_DEGREE = 111.0d;
@@ -44,8 +44,11 @@ public class GeoLocationConstant {
 	public static final double  defaultMinConversationDistance = 0.0001;
 	public static final double  precisedConversationDistance = 0.00001 ;
 	
-	
-	public static Double getInMile(Double maxdistance) {
-		return maxdistance / MILE_PER_DEGREE;
+	/*
+	 * 5280 Foot in 1 mile
+	 */
+	public static Double getFeet(Double distanceInFeet) {
+		return distanceInFeet/5280/ MILE_PER_DEGREE;
 	}
+	
 }

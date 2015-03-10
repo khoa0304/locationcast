@@ -23,5 +23,7 @@ pid=$(jps | grep Bootstrap |cut -d ' ' -f 1)
 if [ "${pid}" ]; then
   echo "Kill Tomcat process id ${pid}" 	
   eval "kill -9 ${pid}"
-  sleep 2
+  sleep 3
 fi
+
+jps
