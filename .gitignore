@@ -1,3 +1,6 @@
 /target
 /test-output
 /target/
+/runtest.sh~
+/startupScript.sh~
+/stopServiceScript.sh~
